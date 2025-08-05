@@ -1,0 +1,231 @@
+﻿body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f7f7f7;
+}
+.banner {
+    flex: 0 0 450px;
+    max-width:750px;
+    border-radius: 20px;
+    overflow: hidden;
+}
+    .banner img {
+        width: 450px;
+        height: 750px;
+        object-fit: cover;
+    }
+.product-layout {
+
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin: 5px;
+    align-items: flex-start;
+}
+.product-container {
+    flex: 2;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: flex-start;
+    align-items: stretch; /* giúp các thẻ bằng chiều cao nếu cần */
+}
+
+.product-list {
+    width: 65%;
+    flex: 1;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: flex-start;
+}
+
+.product-card {
+    height : 370px;
+    box-sizing: border-box;
+    flex: 0 0 calc(33.33% - 20px); /* 4 sp/1 dòng nếu đủ chỗ */
+    max-width: calc(33.33% - 20px);
+    background: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    text-align: center;
+    border: 1px solid #ddd;
+    transition: box-shadow 0.3s;
+    margin:9px;
+}
+
+
+    .product-card:hover {
+        box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+    }
+
+.product-image {
+    font-size:16px;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+    flex-shrink: 0;
+}
+
+    .product-image img {
+        height: 80%;
+        width: 100%;
+        object-fit: contain;
+    }
+.product_name {
+    margin: 5px;
+    font-weight: bold;
+}
+.price {  
+
+    font-weight: bold;
+    color: #d9534f;
+}
+
+.btn-details {
+    width:88px;
+    height: 32px;
+    display: inline-block;
+    background-color: #007bff;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 6px;
+    margin-top: 10px;
+    text-decoration: none;
+}
+
+    .btn-details:hover {
+        background-color: #0056b3;
+    }
+
+.discount-price {
+    margin:0px;
+    font-size:14px;
+    font-weight: bold;
+    color: #d9534f;
+}
+
+.old-price {
+    font-size:12px;
+    margin :0px;
+    text-decoration: line-through;
+    color: #999;
+}
+
+
+.carousel-inner img {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+}
+/*Điều chỉnh banner */
+.banner-slider {
+    width: 100%;
+    max-width: 1200px;
+    height: 300px;
+    margin: 20px auto;
+    overflow: hidden;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+    .banner-slider img {
+        width: 1240px;
+        height: 500px;
+        object-fit: cover;
+    }
+
+   /* responsive*/
+@media (max-width: 992px) {
+    .product-card {
+        flex: 0 0 calc(50% - 20px); /* 2 sản phẩm trên 1 dòng */
+        max-width: calc(50% - 20px);
+    }
+}
+
+@media (max-width: 576px) {
+    .product-card {
+        flex: 0 0 100%; /* 1 sản phẩm trên 1 dòng */
+        max-width: 100%;
+    }
+
+    .product-layout {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .banner {
+        max-width: 100%;
+    }
+}
+/*-----*/
+.product-layout1 {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px; /* khoảng cách giữa các sp */
+    margin: 5px;
+    justify-content: flex-start;
+}
+
+.product-card1 {
+    flex: 0 0 calc(20% - 16px); /* 100% / 5 = 20%, trừ khoảng cách */
+    max-width: calc(20% - 16px);
+    box-sizing: border-box;
+    background: #fff;
+    padding: 12px;
+    margin-bottom: 16px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    text-align: center;
+    transition: box-shadow 0.3s;
+}
+
+    .product-card1:hover {
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .product-card1 img {
+        width: 100%;
+        aspect-ratio: 1/1; /* vuông hoặc điều chỉnh */
+        object-fit: contain;
+        margin-bottom: 8px;
+    }
+
+.section-header {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 600;
+    padding: 18px 0 12px 0;
+    margin: 0 0 10px 0;
+    letter-spacing: 1px;
+    color: #222;
+}
+
+/* CSS cho sản phẩm hết hàng */
+.product-card.out-of-stock,
+.product-card1.out-of-stock {
+    opacity: 0.7;
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+}
+
+.product-card.out-of-stock:hover,
+.product-card1.out-of-stock:hover {
+    opacity: 0.8;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.out-of-stock-badge {
+    background-color: #dc3545;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: bold;
+    display: inline-block;
+    margin: 5px 0;
+}

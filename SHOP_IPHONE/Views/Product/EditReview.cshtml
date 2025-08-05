@@ -1,0 +1,47 @@
+﻿@model SHOP_IPHONE.Models.Review
+@{
+    ViewBag.Title = "Chỉnh sửa đánh giá";
+}
+
+<h2>Chỉnh sửa đánh giá sản phẩm</h2>
+
+@using (Html.BeginForm("EditReview", "Product", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+   <input type="hidden" name="review_id" value="@Model.review_id" />
+
+    <div class="form-group">
+        <label>Số sao:</label>
+        @Html.TextBoxFor(m => m.rating, new { @class = "form-control", type = "number", min = "1", max = "5" })
+    </div>
+
+    <div class="form-group">
+        <label>Bình luận:</label>
+        @Html.TextAreaFor(m => m.comment, new { @class = "form-control", rows = 3 })
+    </div>
+
+    <div class="form-group">
+        <label>Thêm ảnh mới (có thể chọn nhiều):</label>
+        <input type="file" name="images" multiple class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label>Ảnh hiện tại:</label>
+        <div>
+            @if (Model.ReviewImages != null && Model.ReviewImages.Count > 0)
+            {
+                foreach (var img in Model.ReviewImages)
+                {
+                    <img src="@img.ImagePath" style="width:80px; height:80px; object-fit:cover; margin-right:5px; border:1px solid #ddd;" />
+                }
+            }
+            else
+            {
+                <span>Chưa có ảnh nào.</span>
+            }
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-success">Lưu thay đổi</button>
+    <a href="@Url.Action("Details", "Product", new { id = Model.product_id })" class="btn btn-secondary">Quay lại</a>
+}

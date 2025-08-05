@@ -1,0 +1,28 @@
+﻿@model SHOP_IPHONE.Models.Account
+@{
+    ViewBag.Title = "Xóa tài khoản";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Bạn có chắc chắn muốn xóa tài khoản này?</h2>
+
+<div>
+    <dl class="dl-horizontal">
+        <dt>Tên đăng nhập:</dt>
+        <dd>@Model.username</dd>
+
+        <dt>Mật khẩu:</dt>
+        <dd>@Model.password</dd>
+
+        <dt>Vai trò:</dt>
+        <dd>@Model.idtype</dd>
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <button type="submit" class="btn btn-danger">Xóa</button>
+        @Html.ActionLink("Hủy", "Index","Accountadmin", null, new { @class = "btn btn-secondary" })
+    }
+</div>
+

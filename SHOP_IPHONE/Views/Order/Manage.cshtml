@@ -1,0 +1,38 @@
+﻿@{
+    <link rel="stylesheet" href="~/Content/SiteManage.css" />
+    ViewBag.Title = "Quản lý đơn hàng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h2 class="text-center mt-4">Quản lý đơn hàng</h2>
+
+<div class="order-summary-container">
+    <div class="order-box">
+        <a href="@Url.Action("NewOrders", "Order")">
+            <div class="order-icon"><i class="fas fa-shopping-basket"></i></div>
+            <div class="order-count">@ViewBag.NewOrderCount</div>
+            <div class="order-label">Đơn hàng mới</div>
+        </a>
+    </div>
+
+    <div class="order-box">
+        <a href="@Url.Action("ApprovedOrders", "Order")">
+            <div class="order-icon"><i class="fas fa-check-circle"></i></div>
+            <div class="order-count">@ViewBag.ApprovedOrderCount</div>
+            <div class="order-label">Đơn đã duyệt</div>
+        </a>
+    </div>
+
+    <div class="order-box">
+        <a href="@Url.Action("Returns", "Order")">
+            <div class="order-icon"><i class="fas fa-undo"></i></div>
+            <div class="order-count">@ViewBag.ReturnOrderCount</div>
+            <div class="order-label">Đơn đã hủy</div>
+        </a>
+    </div>
+</div>
+<h2>
+    @Html.ActionLink("Quay lại", "Index", "Admin", null, new { @class = "btn btn-secondary", style = "text-decoration:none;" })
+</h2>
+

@@ -1,0 +1,78 @@
+﻿@model IEnumerable<SHOP_IPHONE.Models.Product>
+@{
+    ViewBag.Title = "Danh sách sản phẩm";
+
+}
+@{
+    ViewBag.Title = "Index1";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    <link rel="stylesheet" href="~/Content/Site.css" />
+}
+
+<h2>Danh sách sản phẩm</h2>
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <i class="fa fa-exclamation-triangle"></i>
+        <strong>Lỗi:</strong> @TempData["ErrorMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <i class="fa fa-check-circle"></i>
+        <strong>Thành công:</strong> @TempData["SuccessMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<div class="text-center mt-3">
+    @Html.ActionLink("Tạo sản phẩm mới", "Create", "Product", null, new { @class = "btn btn-success" })
+</div>
+<table class="table">
+    <tr>
+        <th>Mã</th>
+        <th>Tên</th>
+        <th>Giá</th>
+        <th>Hình ảnh</th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.product_id</td>
+            <td>@item.product_name</td>
+            <td>@item.price</td>
+            <td>
+                <img src="@Url.Content("~/Images/" + item.images)" width="80" />
+            </td>
+            <th class="button-group">
+                <div class="btn-group btn-group-sm" role="group">
+                    <a href="@Url.Action("Details", new { id = item.product_id })" 
+                       class="btn btn-info" title="Xem chi tiết">
+                        <i class="fa fa-eye"></i>
+                    </a>
+                    <a href="@Url.Action("Edit", new { id = item.product_id })" 
+                       class="btn btn-warning" title="Sửa sản phẩm">
+                        <i class="fa fa-edit"></i>
+                    </a>
+                    <a href="@Url.Action("Index", "ProductVariant", new { productId = item.product_id })" 
+                       class="btn btn-success" title="Quản lý biến thể">
+                        <i class="fa fa-palette"></i>
+                    </a>
+                    <a href="@Url.Action("Delete", new { id = item.product_id })" 
+                       class="btn btn-danger" title="Xóa sản phẩm"
+                       onclick="return confirm('Bạn có chắc muốn xóa sản phẩm này?')">
+                        <i class="fa fa-trash"></i>
+                    </a>
+                </div>
+            </th>
+        </tr>
+    }
+</table>
+@Html.ActionLink("Quay lại", "Index", "Admin", null, new { @class = "btn btn-success" })

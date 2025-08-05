@@ -1,0 +1,118 @@
+﻿body {
+}
+
+/* Bao quanh toàn bộ danh mục + mega menu */
+.mega-menu {
+    min-height: 200px;
+    overflow: visible;
+    display: flex;
+}
+/* Mega menu hiện đại */
+.mega-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 900px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    padding: 24px;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+    .mega-menu .col-md-9 {
+        display: block !important;
+        height: auto !important;
+        overflow: visible !important;
+    }
+
+    /* Hover giữ menu không bị mất */
+    .menu-wrapper:hover .mega-menu,
+    .mega-menu:hover {
+        display: block;
+    }
+
+    /* Danh mục */
+    .mega-menu ul {
+        list-style: none;
+        padding-left: 0;
+        margin: 0;
+    }
+
+    .mega-menu li {
+        margin-bottom: 10px;
+    }
+
+    .mega-menu a {
+        display: block;
+        padding: 8px 12px;
+        font-weight: 500;
+        color: #111827;
+        font-size: 15px;
+        border-radius: 6px;
+        transition: all 0.2s ease;
+        background: linear-gradient(to right, #f9fafb, #ffffff);
+        text-decoration: none;
+    }
+
+        .mega-menu a:hover {
+            background-color: #f1f5f9;
+            color: #2563eb;
+            transform: translateX(4px);
+        }
+
+    /* Gợi ý sản phẩm Apple */
+    .mega-menu strong {
+        font-size: 16px;
+        margin-bottom: 12px;
+        display: block;
+        color: #111827;
+    }
+
+    .mega-menu .suggestion-chip {
+        display: inline-block;
+        padding: 6px 14px;
+        font-size: 13px;
+        border-radius: 999px;
+        background-color: #e5e7eb;
+        color: #111827;
+        text-decoration: none;
+        margin-right: 10px;
+        margin-bottom: 10px;
+        transition: all 0.3s ease;
+    }
+
+        .mega-menu .suggestion-chip:hover {
+            background-color: #2563eb;
+            color: white;
+        }
+
+.menu-wrapper {
+    position: relative;
+    z-index: 1000;
+    overflow: visible;
+}
+/* Responsive */
+@media (max-width: 768px) {
+    .mega-menu {
+        width: 100vw;
+        left: 0;
+        border-radius: 0;
+        padding: 20px;
+    }
+}
+
+/* Hiệu ứng */
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+

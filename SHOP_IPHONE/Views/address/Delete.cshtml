@@ -1,0 +1,32 @@
+﻿@model SHOP_IPHONE.Models.Address
+
+@{
+    ViewBag.Title = "Xác nhận xóa địa chỉ";
+}
+
+<h2>Xóa địa chỉ nhận hàng</h2>
+
+<div class="alert alert-warning">
+    <strong>Bạn có chắc muốn xóa địa chỉ này không?</strong>
+</div>
+
+<table class="table table-bordered">
+    <tr>
+        <th>Người nhận</th>
+        <td>@Model.RecipientName</td>
+    </tr>
+    <tr>
+        <th>Số điện thoại</th>
+        <td>@Model.Phone</td>
+    </tr>
+    <tr>
+        <th>Địa chỉ</th>
+        <td>@Model.Detail</td>
+    </tr>
+</table>
+
+@using (Html.BeginForm("DeleteConfirmed", "Address", new { id = Model.AddressId }, FormMethod.Post))
+{
+    <button type="submit" class="btn btn-danger">Xóa</button>
+    @Html.ActionLink("Hủy", "Index", null, new { @class = "btn btn-secondary" })
+}

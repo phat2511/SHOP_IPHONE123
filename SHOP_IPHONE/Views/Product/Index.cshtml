@@ -1,0 +1,150 @@
+﻿@model SHOP_IPHONE.Models.Homemol
+
+@using PagedList.Mvc
+@using PagedList
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    <link rel="stylesheet" href="~/Content/Index.css" />
+}
+@section Banner {
+    <div class="container-fluid p-0">
+        <div id="carouselBanner" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="3000" style="max-width: 2000px; margin: auto;">
+            <div class="carousel-inner" style="height: 400px; overflow: hidden;">
+                <!-- 3 banner mặc định -->
+                <div class="carousel-item active">
+                    <img src="https://cdn2.fptshop.com.vn/unsafe/1920x0/filters:quality(100)/FH_1_1240x400_97f7835658.png" class="d-block w-100" alt="Banner 1" />
+                </div>
+                <div class="carousel-item">
+                    <img src="https://cdn2.fptshop.com.vn/unsafe/1920x0/filters:quality(100)/FH_1_1240x400_0f4822b0a6.png" class="d-block w-100" alt="Banner 2" />
+                </div>
+                <div class="carousel-item">
+                    <img src="https://cdn2.fptshop.com.vn/unsafe/1920x0/filters:quality(100)/FH_1_1240x400_ce9d1624c0.png" class="d-block w-100" alt="Banner 3" />
+                </div>
+
+                <!-- Banner mới được thêm -->
+                @{
+                    var dynamicBanners = ViewBag.Banners as List<SHOP_IPHONE.Models.Banner>;
+                    if (dynamicBanners != null)
+                    {
+                        foreach (var item in dynamicBanners)
+                        {
+                            <div class="carousel-item">
+                                <img src="@Url.Content(item.image_path)" class="d-block w-100" alt="@item.title" />
+                            </div>
+                        }
+                    }
+                }
+            </div>
+
+            <!-- Điều hướng trái/phải -->
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselBanner" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselBanner" data-bs-slide="next">
+                <span class="carousel-control-next-icon"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+
+            <!-- Nút tròn chuyển slide -->
+            <div class="carousel-indicators">
+                <!-- 3 nút mặc định -->
+                <button type="button" data-bs-target="#carouselBanner" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carouselBanner" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carouselBanner" data-bs-slide-to="2" aria-label="Slide 3"></button>
+
+                @{
+                    if (dynamicBanners != null)
+                    {
+                        int i = 3; // bắt đầu từ slide thứ 4
+                        foreach (var item in dynamicBanners)
+                        {
+                            <button type="button" data-bs-target="#carouselBanner" data-bs-slide-to="@i" aria-label="Slide @(i + 1)"></button>
+                            i++;
+                        }
+                    }
+                }
+            </div>
+        </div>
+    </div>
+}
+<h3 class="section-header">Sản phẩm nổi bật </h3>
+<div class="product-layout">
+    <!-- Banner bên trái -->
+
+    <div class="banner">
+        <img src="https://cdn2.fptshop.com.vn/unsafe/1080x0/filters:quality(100)/H8_485x470_29757753c2.png" alt="Banner iPhone" />
+    </div>
+    <!-- Sản phẩm bên phải -->
+    <div class="product-list">
+        <div class="row">
+            @foreach (var item in Model.ListProduct1)
+            {
+                <div class="product-card">
+                    <a href="@Url.Action("Details", new { id = item.product_id })">
+                        <div class="product-image">
+                            @if (item.images != null)
+                            {
+                                var base64String = Convert.ToBase64String(item.images);
+                                <img src="data:image/png;base64,@base64String" alt="@item.product_name" />
+                            }
+                        </div>
+                    </a>
+                    <div class="product-info mt-2">
+                        <h6>@item.product_name</h6>
+                        @if (item.GiaKhuyenMai != null && item.GiaKhuyenMai < item.price)
+                        {
+                            <p class="discount-price"> @String.Format("{0:N0}", item.GiaKhuyenMai) ₫</p>
+                            <p class="old-price">  @String.Format("{0:N0}", item.price) ₫</p>
+                        }
+                        else
+                        {
+                            <p class="price"> @String.Format("{0:N0}", item.price) ₫</p>
+                        }
+
+                        @Html.ActionLink("Mua", "BuyNow", "Order", new { id = item.product_id }, new { @class = "btn btn-details mt-2" })
+                    </div>
+
+                </div>
+
+
+            }
+        </div>
+
+    </div>
+</div>
+<h3 class="section-header">Tất cả sản phẩm </h3>
+
+<div class="product-layout1">
+    @foreach (var item in Model.ListProduct)
+    {
+        <div class="product-card1">
+            <a href="@Url.Action("Details", new { id = item.product_id })">
+                <div class="product-image">
+                    @if (item.images != null)
+                    {
+                        var base64String = Convert.ToBase64String(item.images);
+                        <img src="data:image/png;base64,@base64String" alt="@item.product_name" />
+                    }
+                </div>
+            </a>
+            <div class="product-info mt-2">
+                <h6>@item.product_name</h6>
+                @if (item.GiaKhuyenMai != null && item.GiaKhuyenMai < item.price)
+                {
+                    <p class="discount-price"> @String.Format("{0:N0}", item.GiaKhuyenMai) ₫</p>
+                    <p class="old-price">  @String.Format("{0:N0}", item.price) ₫</p>
+                }
+                else
+                {
+                    <p class="price"> @String.Format("{0:N0}", item.price) ₫</p>
+                }
+
+                @Html.ActionLink("Mua", "AddToCart", "Cart", new { id = item.product_id }, new { @class = "btn btn-details mt-2" })
+            </div>
+
+        </div>
+    }
+</div>

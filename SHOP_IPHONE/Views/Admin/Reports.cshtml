@@ -1,0 +1,152 @@
+﻿@{
+    ViewBag.Title = "Thống kê & Báo cáo";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var chartData = Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.RevenueData);
+    var chartLabels = Newtonsoft.Json.JsonConvert.SerializeObject(ViewBag.ChartLabels);
+    var bestSellers = ViewBag.BestSellingProducts as List<SHOP_IPHONE.Models.BestSellerViewModel>;
+}
+
+<link rel="stylesheet" href="~/Content/SiteReports.css" />
+<link href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css" rel="stylesheet" />
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<div class="text-end mb-3">
+    <a href="@Url.Action("ExportReportPdf", "Admin", new { fromDate = ViewBag.FromDate, toDate = ViewBag.ToDate })" class="btn btn-danger">
+        <i class="fas fa-file-pdf"></i> Xuất PDF
+    </a>
+</div>
+
+<h2 class="text-center mt-4"> Thống kê & báo cáo</h2>
+
+
+<div class="report-summary-container">
+    <div class="report-box gradient-dark-blue">
+        <div class="report-icon"><i class="fas fa-shopping-cart"></i></div>
+        <div class="report-label">Đơn đã bán</div>
+        <div class="report-count">@ViewBag.SoldOrders</div>
+    </div>
+
+    <div class="report-box gradient-dark-blue">
+        <div class="report-icon"><i class="fas fa-undo"></i></div>
+        <div class="report-label">Đơn đã hủy</div>
+        <div class="report-count">@ViewBag.CancelledOrders</div>
+    </div>
+
+    <div class="report-box gradient-dark-blue">
+        <div class="report-icon"><i class="fas fa-coins"></i></div>
+        <div class="report-label">Doanh thu</div>
+        <div class="report-count">@String.Format("{0:N0}", ViewBag.Revenue) ₫</div>
+    </div>
+
+    <div class="report-box gradient-dark-blue">
+        <div class="report-icon"><i class="fas fa-boxes"></i></div>
+        <div class="report-label">Sản phẩm đã bán</div>
+        <div class="report-count">@ViewBag.SoldProducts</div>
+    </div>
+</div>
+
+<div class="filter-form mt-3 mb-4 text-center">
+    <form method="get" class="d-flex justify-content-center gap-3 flex-wrap">
+        <div>
+            <label>Từ ngày:</label>
+            <input type="text" class="form-control" name="fromDate" value="@ViewBag.FromDate" placeholder="dd/MM/yyyy" required />
+        </div>
+        <div>
+            <label>Đến ngày:</label>
+            <input type="text" class="form-control" name="toDate" value="@ViewBag.ToDate" placeholder="dd/MM/yyyy" required />
+        </div>
+        <div class="align-self-end">
+            <button type="submit" class="btn btn-primary mt-2">Lọc</button>
+        </div>
+    </form>
+</div>
+<div class="chart-container-wide mt-5">
+    <canvas id="earningsChart"></canvas>
+</div>
+
+<div class="d-flex justify-content-center align-items-start flex-wrap gap-4 mt-5">
+    <div class="sales-report-box" style="width: 300px; background: #fff; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); padding: 20px; margin-right: 20px;">
+        <h5 style="font-weight: 600;">Tình trạng đơn hàng</h5>
+        <p class="text-muted" style="font-size: 14px;"><i class="fas fa-calendar-alt me-1"></i> Trong khoảng đã chọn</p>
+        <h4 class="text-primary">@String.Format("{0:N0}", ViewBag.SoldOrders + ViewBag.CancelledOrders) đơn</h4>
+        <canvas id="ordersPieChart" width="250" height="250" style="margin-top: 10px;"></canvas>
+        <div class="mt-3">
+            <span style="color:#4dabf7;">●</span> Đã bán: <strong>@ViewBag.SoldOrders</strong><br>
+            <span style="color:#ff6b6b;">●</span> Đã hủy: <strong>@ViewBag.CancelledOrders</strong>
+        </div>
+    </div>
+
+    <div class="top-product-box" style="width: 240px; background: #6c63ff; color: white; border-radius: 12px; padding: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+        <h6 class="text-uppercase text-light" style="font-size: 14px;">Top sản phẩm</h6>
+        @foreach (var item in bestSellers)
+        {
+            <div class="mb-2">
+                <h2 style="font-size: 32px; font-weight: bold;">@item.TotalSold</h2>
+                <div style="font-size: 16px;">@item.ProductName</div>
+            </div>
+        }
+        <p class="mt-3" style="font-size: 13px; color: rgba(255,255,255,0.8);">
+            Dựa trên đơn hàng xác nhận gần đây
+        </p>
+    </div>
+</div>
+<h2>
+    @Html.ActionLink("Quay lại", "Index", "Admin", null, new { @class = "btn btn-secondary", style = "text-decoration:none;" })
+</h2>
+
+
+@section Scripts {
+    <script>
+        $(function () {
+            $("input[name='fromDate'], input[name='toDate']").datepicker({
+                dateFormat: 'dd/mm/yy'
+            });
+        });
+
+        const labels = @Html.Raw(chartLabels);
+        const data = @Html.Raw(chartData);
+
+        new Chart(document.getElementById('earningsChart'), {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Doanh thu (VNĐ)',
+                    data: data,
+                    fill: false,
+                    borderColor: '#4dabf7',
+                    tension: 0.2
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: function(value) {
+                                return value.toLocaleString("vi-VN") + ' ₫';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        new Chart(document.getElementById('ordersPieChart'), {
+            type: 'doughnut',
+            data: {
+                labels: ['Đã bán', 'Đã hủy'],
+                datasets: [{
+                    data: [@ViewBag.SoldOrders, @ViewBag.CancelledOrders],
+                    backgroundColor: ['#4dabf7', '#ff6b6b']
+                }]
+            },
+            options: {
+                responsive: true,
+                cutout: '60%'
+            }
+        });
+    </script>
+}

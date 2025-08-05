@@ -1,0 +1,50 @@
+﻿@model SHOP_IPHONE.Models.Account
+@{
+    ViewBag.Title = "Chỉnh sửa tài khoản";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Chỉnh sửa tài khoản</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.account_id)
+    <div class="form-group">
+        @Html.LabelFor(model => model.full_name)
+        @Html.TextBoxFor(model => model.full_name, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.username)
+        @Html.TextBoxFor(model => model.username, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.password)
+        @Html.TextBoxFor(model => model.password, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.email)
+        @Html.TextBoxFor(model => model.email, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.phone)
+        @Html.TextBoxFor(model => model.phone, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.address)
+        @Html.TextBoxFor(model => model.address, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.idtype)
+        @Html.TextBoxFor(model => model.idtype, new { @class = "form-control" })
+    </div>
+
+    <button type="submit" class="btn btn-primary">Cập nhật</button>
+    @Html.ActionLink("Quay lại", "Index", "Accountadmin", null, new { @class = "btn btn-secondary" })
+}

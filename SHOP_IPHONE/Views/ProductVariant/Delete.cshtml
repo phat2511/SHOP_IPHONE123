@@ -1,0 +1,135 @@
+@model SHOP_IPHONE.Models.ProductVariant
+
+@{
+    ViewBag.Title = "Xóa biến thể";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card border-danger">
+                <div class="card-header bg-danger text-white">
+                    <h3 class="card-title">
+                        <i class="fa fa-exclamation-triangle"></i> Xác nhận xóa biến thể
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-warning">
+                        <i class="fa fa-warning"></i>
+                        <strong>Cảnh báo:</strong> Hành động này không thể hoàn tác. Biến thể sẽ bị xóa vĩnh viễn.
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5>Thông tin biến thể:</h5>
+                            <table class="table table-borderless">
+                                <tr>
+                                    <td><strong>Sản phẩm:</strong></td>
+                                    <td>@ViewBag.Product.product_name</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Màu sắc:</strong></td>
+                                    <td>
+                                        <span class="badge bg-primary">@Model.color</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Giá:</strong></td>
+                                    <td>@Model.price?.ToString("N0") VNĐ</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Số lượng:</strong></td>
+                                    <td>@Model.stock cái</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-md-6">
+                            <h5>Ảnh biến thể:</h5>
+                            @if (Model.image != null)
+                            {
+                                var base64String = Convert.ToBase64String(Model.image);
+                                <div class="text-center">
+                                    <img src="data:image/png;base64,@base64String" 
+                                         alt="@Model.color" 
+                                         class="img-fluid rounded" 
+                                         style="max-height: 200px; object-fit: cover;" />
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="text-center">
+                                    <div class="bg-light rounded d-flex align-items-center justify-content-center" 
+                                         style="height: 200px;">
+                                        <span class="text-muted">
+                                            <i class="fa fa-image fa-3x"></i><br>
+                                            Không có ảnh
+                                        </span>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+
+                    <div class="mt-4">
+                        <h6>Ban có chac muon xoa bien the nay?</h6>
+                        <p class="text-muted">
+                            <i class="fa fa-info-circle"></i>
+                            Hanh dong nay se xoa vinh vien bien the mau <strong>@Model.color</strong> 
+                            cua san pham <strong>@ViewBag.Product.product_name</strong>.
+                        </p>
+                    </div>
+
+                    @using (Html.BeginForm("Delete", "ProductVariant", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.HiddenFor(model => model.variant_id)
+
+                        <div class="form-group mt-4">
+                            <button type="submit" class="btn btn-danger">
+                                <i class="fa fa-trash"></i> Xac nhan xoa
+                            </button>
+                            <a href="@Url.Action("Index", "ProductVariant", new { productId = Model.product_id })" 
+                               class="btn btn-secondary">
+                                <i class="fa fa-arrow-left"></i> Huy bo
+                            </a>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.card {
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+.card-header {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.table-borderless td {
+    border: none;
+    padding: 0.5rem 0;
+}
+
+.badge {
+    font-size: 0.875em;
+}
+
+.alert {
+    border-left: 4px solid #ffc107;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
+    border-color: #bd2130;
+}
+</style> 

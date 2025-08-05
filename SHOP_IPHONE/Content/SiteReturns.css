@@ -1,0 +1,117 @@
+﻿/* Font setup */
+* {
+    font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+    background: #f0f0f0;
+    color: #000;
+}
+
+/* Tiêu đề chính */
+.return-title {
+    text-align: center;
+    font-size: 32px;
+    font-weight: bold;
+    margin: 40px 0 25px;
+    color: #2c5364;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Bọc bảng */
+.table-wrapper {
+    width: 95%;
+    margin: auto;
+    overflow-x: auto;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    border-radius: 12px;
+    background: #f0f0f0;
+    padding: 25px;
+    color: #000;
+}
+
+/* Bảng hiện đại */
+.modern-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 15px;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+    .modern-table thead {
+        background: linear-gradient(90deg, #0f2027, #203a43, #2c5364); /* Giữ lại thanh màu xanh đen */
+        color: #ffffff;
+    }
+
+        .modern-table thead th {
+            padding: 14px 16px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+    .modern-table tbody td {
+        padding: 16px;
+        text-align: center;
+        color: #000; /* Chữ đen rõ ràng */
+        vertical-align: middle;
+        border-bottom: 1px solid #ccc;
+    }
+
+    .modern-table tbody tr:hover {
+        background-color: #ececec;
+        transition: background 0.3s;
+        color: #000;
+    }
+
+/* Trạng thái đơn */
+.order-status {
+    display: inline-block;
+    padding: 6px 14px;
+    background-color: #ff4d4f;
+    color: #fff;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .modern-table thead {
+        display: none;
+    }
+
+    .modern-table,
+    .modern-table tbody,
+    .modern-table tr,
+    .modern-table td {
+        display: block;
+        width: 100%;
+    }
+
+        .modern-table tr {
+            margin-bottom: 15px;
+            background: #f8f8f8;
+            border-radius: 10px;
+            padding: 10px;
+        }
+
+        .modern-table td {
+            text-align: right;
+            padding-left: 50%;
+            position: relative;
+            color: #000;
+        }
+
+            .modern-table td::before {
+                content: attr(data-label);
+                position: absolute;
+                left: 10px;
+                font-weight: bold;
+                color: #00bcd4;
+                text-align: left;
+            }
+}

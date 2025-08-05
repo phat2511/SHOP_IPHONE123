@@ -1,0 +1,22 @@
+﻿
+@{
+    ViewBag.Title = "Category";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2 class="text-center mb-4">Danh mục: </h2>
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-3 mb-4">
+            <div class="card h-100 shadow">
+                <img src="data:image/png;base64,@Convert.ToBase64String(item.images)" class="card-img-top" style="height: 200px; object-fit: cover;" />
+                <div class="card-body text-center">
+                    <h5 class="card-title">@item.product_name</h5>
+                    <p class="text-danger fw-bold">@String.Format("{0:N0}", item.price) ₫</p>
+                    <a href="@Url.Action("Details", "Product", new { id = item.product_id })" class="btn btn-outline-primary btn-sm">Xem chi tiết</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>

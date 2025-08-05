@@ -1,0 +1,63 @@
+﻿@model SHOP_IPHONE.Models.Product
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+@{
+    ViewBag.Title = "Edit Product";
+}
+
+<h2>Chỉnh sửa sản phẩm</h2>
+
+@using (Html.BeginForm("Edit", "Product", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.product_id)
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.product_name, "Tên sản phẩm")
+        @Html.TextBoxFor(model => model.product_name, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.description, "Mô tả")
+        @Html.TextAreaFor(model => model.description, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.price, "Giá sản phẩm")
+        @Html.TextBoxFor(model => model.price, new { @class = "form-control", type = "number" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.GiaKhuyenMai, "Giá khuyến mãi")
+        @Html.EditorFor(model => model.GiaKhuyenMai, new { htmlAttributes = new { @class = "form-control", type = "number" } })
+        @Html.ValidationMessageFor(model => model.GiaKhuyenMai, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.stock, "Số lượng tồn kho")
+        @Html.TextBoxFor(model => model.stock, new { @class = "form-control", type = "number", min = "0", placeholder = "Nhập số lượng tồn kho" })
+        @Html.ValidationMessageFor(model => model.stock, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.Label("Chọn hình ảnh mới")
+        <input type="file" name="uploadImage" class="form-control" />
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.category_id, "Danh mục")
+        @Html.DropDownList("category_id", null, htmlAttributes: new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.IsHot, "Sản phẩm nổi bật")
+        @Html.CheckBox("IsHot", Model.IsHot ?? false)
+
+    </div>
+    <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+    @Html.ActionLink("Hủy", "Index1", "Product", null, new { @class = "btn btn-secondary" })
+
+}

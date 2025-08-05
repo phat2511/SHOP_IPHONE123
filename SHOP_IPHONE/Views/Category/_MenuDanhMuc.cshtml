@@ -1,0 +1,42 @@
+﻿
+@model List<SHOP_IPHONE.Models.Category>
+
+<div class="mega-menu bg-white shadow p-3 rounded">
+    <div class="row">
+        <!-- Danh mục bên trái -->
+        <div class="col-md-3">
+            <ul class="list-unstyled">
+                @foreach (var cat in Model)
+                {
+                    <li>
+                        @{
+                            var link = Url.Action("Category", "Product", new { id = cat.category_id });
+                        }
+     
+                    </li>
+                }
+            </ul>
+        </div>
+
+        <div class="col-md-9">
+            <strong>Gợi ý</strong>
+            <ul class="list-unstyled d-flex flex-wrap small">
+                <li class="me-3">
+                    <a href="@Url.Action("Search", "Product", new { keyword = "iPhone" })">iPhone</a>
+                </li>
+                <li class="me-3">
+                    <a href="@Url.Action("Search", "Product", new { keyword = "MacBook" })">MacBook</a>
+                </li>
+                <li class="me-3">
+                    <a href="@Url.Action("Search", "Product", new { keyword = "Apple Watch" })">Apple Watch</a>
+                </li>
+                <li class="me-3">
+                    <a href="@Url.Action("Search", "Product", new { keyword = "iPad" })">iPad</a>
+                </li>
+                <li class="me-3">
+                    <a href="@Url.Action("Search", "Product", new { keyword = "AirPods" })">AirPods</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

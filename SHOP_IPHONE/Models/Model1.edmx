@@ -1,0 +1,1111 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="DBiphoneModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Account">
+          <Key>
+            <PropertyRef Name="account_id" />
+          </Key>
+          <Property Name="account_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="username" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="idtype" Type="int" Nullable="false" />
+          <Property Name="password" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="full_name" Type="nvarchar" MaxLength="100" />
+          <Property Name="email" Type="nvarchar" MaxLength="100" />
+          <Property Name="phone" Type="nvarchar" MaxLength="20" />
+          <Property Name="address" Type="nvarchar" MaxLength="255" />
+          <Property Name="isVerified" Type="bit" Nullable="false" />
+          <Property Name="isLocked" Type="bit" Nullable="false" />
+          <Property Name="isLockedByAdmin" Type="bit" Nullable="false" />
+          <Property Name="lockDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Address">
+          <Key>
+            <PropertyRef Name="AddressId" />
+          </Key>
+          <Property Name="AddressId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AccountId" Type="int" Nullable="false" />
+          <Property Name="RecipientName" Type="nvarchar" MaxLength="100" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="20" />
+          <Property Name="Detail" Type="nvarchar" MaxLength="255" />
+          <Property Name="IsDefault" Type="bit" />
+        </EntityType>
+        <EntityType Name="Banner">
+          <Key>
+            <PropertyRef Name="banner_id" />
+          </Key>
+          <Property Name="banner_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="title" Type="nvarchar" MaxLength="255" />
+          <Property Name="image_path" Type="nvarchar" MaxLength="255" />
+          <Property Name="link" Type="nvarchar" MaxLength="255" />
+          <Property Name="is_active" Type="bit" />
+          <Property Name="created_at" Type="datetime" />
+          <Property Name="product_id" Type="int" />
+        </EntityType>
+        <EntityType Name="Cart">
+          <Key>
+            <PropertyRef Name="cart_id" />
+          </Key>
+          <Property Name="cart_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="account_id" Type="int" />
+        </EntityType>
+        <EntityType Name="CartItem">
+          <Key>
+            <PropertyRef Name="cart_item_id" />
+          </Key>
+          <Property Name="cart_item_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="cart_id" Type="int" />
+          <Property Name="product_id" Type="int" />
+          <Property Name="quantity" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="category_id" />
+          </Key>
+          <Property Name="category_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="category_name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="category1_id" Type="int" />
+        </EntityType>
+        <EntityType Name="Category1">
+          <Key>
+            <PropertyRef Name="category1_id" />
+          </Key>
+          <Property Name="category1_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="company_name" Type="nvarchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="order_id" />
+          </Key>
+          <Property Name="order_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="account_id" Type="int" />
+          <Property Name="order_date" Type="datetime" />
+          <Property Name="total_amount" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="status" Type="nvarchar" MaxLength="50" />
+          <Property Name="customer_name" Type="nvarchar" MaxLength="100" />
+          <Property Name="address" Type="nvarchar" MaxLength="255" />
+          <Property Name="phone" Type="nvarchar" MaxLength="20" />
+          <Property Name="payment_method" Type="nvarchar" MaxLength="50" />
+          <Property Name="shipping_fee" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="discount_amount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="voucher_id" Type="int" />
+          <Property Name="Vat" Type="decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="OrderItem">
+          <Key>
+            <PropertyRef Name="order_item_id" />
+          </Key>
+          <Property Name="order_item_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="order_id" Type="int" />
+          <Property Name="product_id" Type="int" />
+          <Property Name="quantity" Type="int" Nullable="false" />
+          <Property Name="UnitPrice" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="price" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="product_id" />
+          </Key>
+          <Property Name="product_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="product_name" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="price" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="description" Type="nvarchar(max)" />
+          <Property Name="company_id" Type="int" />
+          <Property Name="category_id" Type="int" />
+          <Property Name="images" Type="varbinary(max)" />
+          <Property Name="GiaKhuyenMai" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="IsFeatured" Type="bit" Nullable="false" />
+          <Property Name="IsHot" Type="bit" />
+          <Property Name="stock" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ProductVariant">
+          <Key>
+            <PropertyRef Name="variant_id" />
+          </Key>
+          <Property Name="variant_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="product_id" Type="int" Nullable="false" />
+          <Property Name="color" Type="nvarchar" MaxLength="50" />
+          <Property Name="price" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="stock" Type="int" />
+          <Property Name="image" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Review">
+          <Key>
+            <PropertyRef Name="review_id" />
+          </Key>
+          <Property Name="review_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="product_id" Type="int" Nullable="false" />
+          <Property Name="account_id" Type="int" Nullable="false" />
+          <Property Name="rating" Type="int" Nullable="false" />
+          <Property Name="comment" Type="nvarchar" MaxLength="1000" />
+          <Property Name="created_date" Type="datetime" />
+          <Property Name="Likes" Type="int" />
+        </EntityType>
+        <EntityType Name="ReviewImages">
+          <Key>
+            <PropertyRef Name="ReviewImageId" />
+          </Key>
+          <Property Name="ReviewImageId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ReviewId" Type="int" Nullable="false" />
+          <Property Name="ImagePath" Type="nvarchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Voucher">
+          <Key>
+            <PropertyRef Name="voucher_id" />
+          </Key>
+          <Property Name="voucher_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="code" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="discount_amount" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="discount_percent" Type="int" />
+          <Property Name="start_date" Type="datetime" />
+          <Property Name="end_date" Type="datetime" />
+          <Property Name="min_order_value" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="is_active" Type="bit" />
+        </EntityType>
+        <Association Name="FK__Address__Account__4C6B5938">
+          <End Role="Account" Type="Self.Account" Multiplicity="1" />
+          <End Role="Address" Type="Self.Address" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="account_id" />
+            </Principal>
+            <Dependent Role="Address">
+              <PropertyRef Name="AccountId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Banner__product___47A6A41B">
+          <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
+          <End Role="Banner" Type="Self.Banner" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="product_id" />
+            </Principal>
+            <Dependent Role="Banner">
+              <PropertyRef Name="product_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Cart__account_id__55F4C372">
+          <End Role="Account" Type="Self.Account" Multiplicity="0..1" />
+          <End Role="Cart" Type="Self.Cart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="account_id" />
+            </Principal>
+            <Dependent Role="Cart">
+              <PropertyRef Name="account_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CartItem__cart_i__58D1301D">
+          <End Role="Cart" Type="Self.Cart" Multiplicity="0..1" />
+          <End Role="CartItem" Type="Self.CartItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cart">
+              <PropertyRef Name="cart_id" />
+            </Principal>
+            <Dependent Role="CartItem">
+              <PropertyRef Name="cart_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CartItem__produc__59C55456">
+          <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
+          <End Role="CartItem" Type="Self.CartItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="product_id" />
+            </Principal>
+            <Dependent Role="CartItem">
+              <PropertyRef Name="product_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Category__catego__17F790F9">
+          <End Role="Category1" Type="Self.Category1" Multiplicity="0..1" />
+          <End Role="Category" Type="Self.Category" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category1">
+              <PropertyRef Name="category1_id" />
+            </Principal>
+            <Dependent Role="Category">
+              <PropertyRef Name="category1_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Order__account_i__5F7E2DAC">
+          <End Role="Account" Type="Self.Account" Multiplicity="0..1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="account_id" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="account_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OrderItem__order__65370702">
+          <End Role="Order" Type="Self.Order" Multiplicity="0..1" />
+          <End Role="OrderItem" Type="Self.OrderItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="order_id" />
+            </Principal>
+            <Dependent Role="OrderItem">
+              <PropertyRef Name="order_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OrderItem__produ__662B2B3B">
+          <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
+          <End Role="OrderItem" Type="Self.OrderItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="product_id" />
+            </Principal>
+            <Dependent Role="OrderItem">
+              <PropertyRef Name="product_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Product__categor__1BC821DD">
+          <End Role="Category" Type="Self.Category" Multiplicity="0..1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="category_id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="category_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Product__company__1AD3FDA4">
+          <End Role="Category1" Type="Self.Category1" Multiplicity="0..1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category1">
+              <PropertyRef Name="category1_id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="company_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Voucher">
+          <End Role="Voucher" Type="Self.Voucher" Multiplicity="0..1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Voucher">
+              <PropertyRef Name="voucher_id" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="voucher_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductVariant_Product">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="ProductVariant" Type="Self.ProductVariant" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="product_id" />
+            </Principal>
+            <Dependent Role="ProductVariant">
+              <PropertyRef Name="product_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Review_Account">
+          <End Role="Account" Type="Self.Account" Multiplicity="1" />
+          <End Role="Review" Type="Self.Review" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="account_id" />
+            </Principal>
+            <Dependent Role="Review">
+              <PropertyRef Name="account_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Review_Product">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="Review" Type="Self.Review" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="product_id" />
+            </Principal>
+            <Dependent Role="Review">
+              <PropertyRef Name="product_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ReviewImages_Review">
+          <End Role="Review" Type="Self.Review" Multiplicity="1" />
+          <End Role="ReviewImages" Type="Self.ReviewImages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Review">
+              <PropertyRef Name="review_id" />
+            </Principal>
+            <Dependent Role="ReviewImages">
+              <PropertyRef Name="ReviewId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DBiphoneModelStoreContainer">
+          <EntitySet Name="Account" EntityType="Self.Account" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Address" EntityType="Self.Address" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Banner" EntityType="Self.Banner" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cart" EntityType="Self.Cart" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CartItem" EntityType="Self.CartItem" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Category1" EntityType="Self.Category1" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrderItem" EntityType="Self.OrderItem" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductVariant" EntityType="Self.ProductVariant" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Review" EntityType="Self.Review" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ReviewImages" EntityType="Self.ReviewImages" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Voucher" EntityType="Self.Voucher" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Address__Account__4C6B5938" Association="Self.FK__Address__Account__4C6B5938">
+            <End Role="Account" EntitySet="Account" />
+            <End Role="Address" EntitySet="Address" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Banner__product___47A6A41B" Association="Self.FK__Banner__product___47A6A41B">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="Banner" EntitySet="Banner" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Cart__account_id__55F4C372" Association="Self.FK__Cart__account_id__55F4C372">
+            <End Role="Account" EntitySet="Account" />
+            <End Role="Cart" EntitySet="Cart" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CartItem__cart_i__58D1301D" Association="Self.FK__CartItem__cart_i__58D1301D">
+            <End Role="Cart" EntitySet="Cart" />
+            <End Role="CartItem" EntitySet="CartItem" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CartItem__produc__59C55456" Association="Self.FK__CartItem__produc__59C55456">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="CartItem" EntitySet="CartItem" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Category__catego__17F790F9" Association="Self.FK__Category__catego__17F790F9">
+            <End Role="Category1" EntitySet="Category1" />
+            <End Role="Category" EntitySet="Category" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Order__account_i__5F7E2DAC" Association="Self.FK__Order__account_i__5F7E2DAC">
+            <End Role="Account" EntitySet="Account" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OrderItem__order__65370702" Association="Self.FK__OrderItem__order__65370702">
+            <End Role="Order" EntitySet="Order" />
+            <End Role="OrderItem" EntitySet="OrderItem" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OrderItem__produ__662B2B3B" Association="Self.FK__OrderItem__produ__662B2B3B">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="OrderItem" EntitySet="OrderItem" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Product__categor__1BC821DD" Association="Self.FK__Product__categor__1BC821DD">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Product__company__1AD3FDA4" Association="Self.FK__Product__company__1AD3FDA4">
+            <End Role="Category1" EntitySet="Category1" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Voucher" Association="Self.FK_Order_Voucher">
+            <End Role="Voucher" EntitySet="Voucher" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductVariant_Product" Association="Self.FK_ProductVariant_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="ProductVariant" EntitySet="ProductVariant" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Review_Account" Association="Self.FK_Review_Account">
+            <End Role="Account" EntitySet="Account" />
+            <End Role="Review" EntitySet="Review" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Review_Product" Association="Self.FK_Review_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="Review" EntitySet="Review" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReviewImages_Review" Association="Self.FK_ReviewImages_Review">
+            <End Role="Review" EntitySet="Review" />
+            <End Role="ReviewImages" EntitySet="ReviewImages" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DBiphoneModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Account">
+          <Key>
+            <PropertyRef Name="account_id" />
+          </Key>
+          <Property Name="account_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="idtype" Type="Int32" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="full_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="phone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="address" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Carts" Relationship="Self.FK__Cart__account_id__5DCAEF64" FromRole="Account" ToRole="Cart" />
+          <NavigationProperty Name="Addresses" Relationship="DBiphoneModel.FK__Address__Account__3B40CD36" FromRole="Account" ToRole="Address" />
+          <NavigationProperty Name="Orders" Relationship="DBiphoneModel.FK__Order__account_i__5F7E2DAC" FromRole="Account" ToRole="Order" />
+          <NavigationProperty Name="Reviews" Relationship="DBiphoneModel.FK_Review_Account" FromRole="Account" ToRole="Review" />
+          <Property Name="isVerified" Type="Boolean" Nullable="false" />
+          <Property Name="isLocked" Type="Boolean" Nullable="false" />
+          <Property Name="isLockedByAdmin" Type="Boolean" Nullable="false" />
+          <Property Name="lockDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="Cart">
+          <Key>
+            <PropertyRef Name="cart_id" />
+          </Key>
+          <Property Name="cart_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="account_id" Type="Int32" />
+          <NavigationProperty Name="Account" Relationship="Self.FK__Cart__account_id__5DCAEF64" FromRole="Cart" ToRole="Account" />
+          <NavigationProperty Name="CartItems" Relationship="Self.FK__CartItem__cart_i__60A75C0F" FromRole="Cart" ToRole="CartItem" />
+        </EntityType>
+        <EntityType Name="CartItem">
+          <Key>
+            <PropertyRef Name="cart_item_id" />
+          </Key>
+          <Property Name="cart_item_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="cart_id" Type="Int32" />
+          <Property Name="product_id" Type="Int32" />
+          <Property Name="quantity" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Cart" Relationship="Self.FK__CartItem__cart_i__60A75C0F" FromRole="CartItem" ToRole="Cart" />
+          <NavigationProperty Name="Product" Relationship="Self.FK__CartItem__produc__619B8048" FromRole="CartItem" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="category_id" />
+          </Key>
+          <Property Name="category_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="category_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="category1_id" Type="Int32" />
+          <NavigationProperty Name="Category1" Relationship="Self.FK__Category__catego__4BAC3F29" FromRole="Category" ToRole="Category1" />
+          <NavigationProperty Name="Products" Relationship="Self.FK__Product__categor__4F7CD00D" FromRole="Category" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="Category1">
+          <Key>
+            <PropertyRef Name="category1_id" />
+          </Key>
+          <Property Name="category1_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="company_name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Categories" Relationship="Self.FK__Category__catego__4BAC3F29" FromRole="Category1" ToRole="Category" />
+          <NavigationProperty Name="Products" Relationship="Self.FK__Product__company__4E88ABD4" FromRole="Category1" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="OrderItem">
+          <Key>
+            <PropertyRef Name="order_item_id" />
+          </Key>
+          <Property Name="order_item_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="order_id" Type="Int32" />
+          <Property Name="product_id" Type="Int32" />
+          <Property Name="quantity" Type="Int32" Nullable="false" />
+          <Property Name="price" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <NavigationProperty Name="Product" Relationship="Self.FK__OrderItem__produ__5AEE82B9" FromRole="OrderItem" ToRole="Product" />
+          <Property Name="UnitPrice" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <NavigationProperty Name="Order" Relationship="DBiphoneModel.FK__OrderItem__order__65370702" FromRole="OrderItem" ToRole="Order" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="product_id" />
+          </Key>
+          <Property Name="product_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="product_name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="price" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="company_id" Type="Int32" />
+          <Property Name="category_id" Type="Int32" />
+          <Property Name="images" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="CartItems" Relationship="Self.FK__CartItem__produc__619B8048" FromRole="Product" ToRole="CartItem" />
+          <NavigationProperty Name="Category" Relationship="Self.FK__Product__categor__4F7CD00D" FromRole="Product" ToRole="Category" />
+          <NavigationProperty Name="Category1" Relationship="Self.FK__Product__company__4E88ABD4" FromRole="Product" ToRole="Category1" />
+          <NavigationProperty Name="OrderItems" Relationship="Self.FK__OrderItem__produ__5AEE82B9" FromRole="Product" ToRole="OrderItem" />
+          <Property Name="GiaKhuyenMai" Type="Decimal" Precision="10" Scale="2" />
+          <NavigationProperty Name="Banners" Relationship="DBiphoneModel.FK__Banner__product___47A6A41B" FromRole="Product" ToRole="Banner" />
+          <Property Name="IsFeatured" Type="Boolean" Nullable="false" />
+          <Property Name="IsHot" Type="Boolean" />
+          <NavigationProperty Name="ProductVariants" Relationship="DBiphoneModel.FK_ProductVariant_Product" FromRole="Product" ToRole="ProductVariant" />
+          <Property Name="stock" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Reviews" Relationship="DBiphoneModel.FK_Review_Product" FromRole="Product" ToRole="Review" />
+        </EntityType>
+        <Association Name="FK__Cart__account_id__5DCAEF64">
+          <End Role="Account" Type="Self.Account" Multiplicity="0..1" />
+          <End Role="Cart" Type="Self.Cart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="account_id" />
+            </Principal>
+            <Dependent Role="Cart">
+              <PropertyRef Name="account_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CartItem__cart_i__60A75C0F">
+          <End Role="Cart" Type="Self.Cart" Multiplicity="0..1" />
+          <End Role="CartItem" Type="Self.CartItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cart">
+              <PropertyRef Name="cart_id" />
+            </Principal>
+            <Dependent Role="CartItem">
+              <PropertyRef Name="cart_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CartItem__produc__619B8048">
+          <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
+          <End Role="CartItem" Type="Self.CartItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="product_id" />
+            </Principal>
+            <Dependent Role="CartItem">
+              <PropertyRef Name="product_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Category__catego__4BAC3F29">
+          <End Role="Category1" Type="Self.Category1" Multiplicity="0..1" />
+          <End Role="Category" Type="Self.Category" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category1">
+              <PropertyRef Name="category1_id" />
+            </Principal>
+            <Dependent Role="Category">
+              <PropertyRef Name="category1_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Product__categor__4F7CD00D">
+          <End Role="Category" Type="Self.Category" Multiplicity="0..1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="category_id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="category_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Product__company__4E88ABD4">
+          <End Role="Category1" Type="Self.Category1" Multiplicity="0..1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category1">
+              <PropertyRef Name="category1_id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="company_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OrderItem__produ__5AEE82B9">
+          <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
+          <End Role="OrderItem" Type="Self.OrderItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="product_id" />
+            </Principal>
+            <Dependent Role="OrderItem">
+              <PropertyRef Name="product_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DBiphoneEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Accounts" EntityType="Self.Account" />
+          <EntitySet Name="Carts" EntityType="Self.Cart" />
+          <EntitySet Name="CartItems" EntityType="Self.CartItem" />
+          <EntitySet Name="Categories" EntityType="Self.Category" />
+          <EntitySet Name="Category1" EntityType="Self.Category1" />
+          <EntitySet Name="OrderItems" EntityType="Self.OrderItem" />
+          <EntitySet Name="Products" EntityType="Self.Product" />
+          <AssociationSet Name="FK__Cart__account_id__5DCAEF64" Association="Self.FK__Cart__account_id__5DCAEF64">
+            <End Role="Account" EntitySet="Accounts" />
+            <End Role="Cart" EntitySet="Carts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CartItem__cart_i__60A75C0F" Association="Self.FK__CartItem__cart_i__60A75C0F">
+            <End Role="Cart" EntitySet="Carts" />
+            <End Role="CartItem" EntitySet="CartItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CartItem__produc__619B8048" Association="Self.FK__CartItem__produc__619B8048">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="CartItem" EntitySet="CartItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Category__catego__4BAC3F29" Association="Self.FK__Category__catego__4BAC3F29">
+            <End Role="Category1" EntitySet="Category1" />
+            <End Role="Category" EntitySet="Categories" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Product__categor__4F7CD00D" Association="Self.FK__Product__categor__4F7CD00D">
+            <End Role="Category" EntitySet="Categories" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Product__company__4E88ABD4" Association="Self.FK__Product__company__4E88ABD4">
+            <End Role="Category1" EntitySet="Category1" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OrderItem__produ__5AEE82B9" Association="Self.FK__OrderItem__produ__5AEE82B9">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="OrderItem" EntitySet="OrderItems" />
+          </AssociationSet>
+          <EntitySet Name="Vouchers" EntityType="DBiphoneModel.Voucher" />
+          <EntitySet Name="Addresses" EntityType="DBiphoneModel.Address" />
+          <AssociationSet Name="FK__Address__Account__3B40CD36" Association="DBiphoneModel.FK__Address__Account__3B40CD36">
+            <End Role="Account" EntitySet="Accounts" />
+            <End Role="Address" EntitySet="Addresses" />
+          </AssociationSet>
+          <EntitySet Name="Banners" EntityType="DBiphoneModel.Banner" />
+          <AssociationSet Name="FK__Banner__product___47A6A41B" Association="DBiphoneModel.FK__Banner__product___47A6A41B">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="Banner" EntitySet="Banners" />
+          </AssociationSet>
+          <EntitySet Name="Orders" EntityType="DBiphoneModel.Order" />
+          <AssociationSet Name="FK__Order__account_i__5F7E2DAC" Association="DBiphoneModel.FK__Order__account_i__5F7E2DAC">
+            <End Role="Account" EntitySet="Accounts" />
+            <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OrderItem__order__65370702" Association="DBiphoneModel.FK__OrderItem__order__65370702">
+            <End Role="Order" EntitySet="Orders" />
+            <End Role="OrderItem" EntitySet="OrderItems" />
+          </AssociationSet>
+          <EntitySet Name="ProductVariants" EntityType="DBiphoneModel.ProductVariant" />
+          <AssociationSet Name="FK_ProductVariant_Product" Association="DBiphoneModel.FK_ProductVariant_Product">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="ProductVariant" EntitySet="ProductVariants" />
+          </AssociationSet>
+          <EntitySet Name="Reviews" EntityType="DBiphoneModel.Review" />
+          <AssociationSet Name="FK_Review_Account" Association="DBiphoneModel.FK_Review_Account">
+            <End Role="Account" EntitySet="Accounts" />
+            <End Role="Review" EntitySet="Reviews" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Review_Product" Association="DBiphoneModel.FK_Review_Product">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="Review" EntitySet="Reviews" />
+          </AssociationSet>
+          <EntitySet Name="ReviewImages" EntityType="DBiphoneModel.ReviewImage" />
+          <AssociationSet Name="FK_ReviewImages_Review" Association="DBiphoneModel.FK_ReviewImages_Review">
+            <End Role="Review" EntitySet="Reviews" />
+            <End Role="ReviewImage" EntitySet="ReviewImages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Voucher" Association="DBiphoneModel.FK_Order_Voucher">
+            <End Role="Voucher" EntitySet="Vouchers" />
+            <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Voucher">
+          <Key>
+            <PropertyRef Name="voucher_id" />
+          </Key>
+          <Property Name="voucher_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="discount_amount" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="discount_percent" Type="Int32" />
+          <Property Name="start_date" Type="DateTime" Precision="3" />
+          <Property Name="end_date" Type="DateTime" Precision="3" />
+          <Property Name="min_order_value" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="is_active" Type="Boolean" />
+          <NavigationProperty Name="Orders" Relationship="DBiphoneModel.FK_Order_Voucher" FromRole="Voucher" ToRole="Order" />
+        </EntityType>
+        <EntityType Name="Address">
+          <Key>
+            <PropertyRef Name="AddressId" />
+          </Key>
+          <Property Name="AddressId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AccountId" Type="Int32" Nullable="false" />
+          <Property Name="RecipientName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Detail" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="IsDefault" Type="Boolean" />
+          <NavigationProperty Name="Account" Relationship="DBiphoneModel.FK__Address__Account__3B40CD36" FromRole="Address" ToRole="Account" />
+        </EntityType>
+        <Association Name="FK__Address__Account__3B40CD36">
+          <End Type="DBiphoneModel.Account" Role="Account" Multiplicity="1" />
+          <End Type="DBiphoneModel.Address" Role="Address" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="account_id" />
+            </Principal>
+            <Dependent Role="Address">
+              <PropertyRef Name="AccountId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Banner">
+          <Key>
+            <PropertyRef Name="banner_id" />
+          </Key>
+          <Property Name="banner_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="title" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="image_path" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="link" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="is_active" Type="Boolean" />
+          <Property Name="created_at" Type="DateTime" Precision="3" />
+          <Property Name="product_id" Type="Int32" />
+          <NavigationProperty Name="Product" Relationship="DBiphoneModel.FK__Banner__product___47A6A41B" FromRole="Banner" ToRole="Product" />
+        </EntityType>
+        <Association Name="FK__Banner__product___47A6A41B">
+          <End Type="DBiphoneModel.Product" Role="Product" Multiplicity="0..1" />
+          <End Type="DBiphoneModel.Banner" Role="Banner" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="product_id" />
+            </Principal>
+            <Dependent Role="Banner">
+              <PropertyRef Name="product_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="order_id" />
+          </Key>
+          <Property Name="order_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="account_id" Type="Int32" />
+          <Property Name="order_date" Type="DateTime" Precision="3" />
+          <Property Name="total_amount" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="customer_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="address" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="phone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="payment_method" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="shipping_fee" Type="Decimal" Precision="10" Scale="2" />
+          <NavigationProperty Name="Account" Relationship="DBiphoneModel.FK__Order__account_i__5F7E2DAC" FromRole="Order" ToRole="Account" />
+          <NavigationProperty Name="OrderItems" Relationship="DBiphoneModel.FK__OrderItem__order__65370702" FromRole="Order" ToRole="OrderItem" />
+          <Property Name="discount_amount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="voucher_id" Type="Int32" />
+          <Property Name="Vat" Type="Decimal" Precision="18" Scale="2" />
+          <NavigationProperty Name="Voucher" Relationship="DBiphoneModel.FK_Order_Voucher" FromRole="Order" ToRole="Voucher" />
+        </EntityType>
+        <Association Name="FK__Order__account_i__5F7E2DAC">
+          <End Type="DBiphoneModel.Account" Role="Account" Multiplicity="0..1" />
+          <End Type="DBiphoneModel.Order" Role="Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="account_id" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="account_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OrderItem__order__65370702">
+          <End Type="DBiphoneModel.Order" Role="Order" Multiplicity="0..1" />
+          <End Type="DBiphoneModel.OrderItem" Role="OrderItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="order_id" />
+            </Principal>
+            <Dependent Role="OrderItem">
+              <PropertyRef Name="order_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ProductVariant">
+          <Key>
+            <PropertyRef Name="variant_id" />
+          </Key>
+          <Property Name="variant_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="product_id" Type="Int32" Nullable="false" />
+          <Property Name="color" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="price" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="stock" Type="Int32" />
+          <Property Name="image" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="Product" Relationship="DBiphoneModel.FK_ProductVariant_Product" FromRole="ProductVariant" ToRole="Product" />
+        </EntityType>
+        <Association Name="FK_ProductVariant_Product">
+          <End Type="DBiphoneModel.Product" Role="Product" Multiplicity="1" />
+          <End Type="DBiphoneModel.ProductVariant" Role="ProductVariant" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="product_id" />
+            </Principal>
+            <Dependent Role="ProductVariant">
+              <PropertyRef Name="product_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Review">
+          <Key>
+            <PropertyRef Name="review_id" />
+          </Key>
+          <Property Name="review_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="product_id" Type="Int32" Nullable="false" />
+          <Property Name="account_id" Type="Int32" Nullable="false" />
+          <Property Name="rating" Type="Int32" Nullable="false" />
+          <Property Name="comment" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="created_date" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Account" Relationship="DBiphoneModel.FK_Review_Account" FromRole="Review" ToRole="Account" />
+          <NavigationProperty Name="Product" Relationship="DBiphoneModel.FK_Review_Product" FromRole="Review" ToRole="Product" />
+          <Property Name="Likes" Type="Int32" />
+          <NavigationProperty Name="ReviewImages" Relationship="DBiphoneModel.FK_ReviewImages_Review" FromRole="Review" ToRole="ReviewImage" />
+        </EntityType>
+        <Association Name="FK_Review_Account">
+          <End Type="DBiphoneModel.Account" Role="Account" Multiplicity="1" />
+          <End Type="DBiphoneModel.Review" Role="Review" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="account_id" />
+            </Principal>
+            <Dependent Role="Review">
+              <PropertyRef Name="account_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Review_Product">
+          <End Type="DBiphoneModel.Product" Role="Product" Multiplicity="1" />
+          <End Type="DBiphoneModel.Review" Role="Review" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="product_id" />
+            </Principal>
+            <Dependent Role="Review">
+              <PropertyRef Name="product_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ReviewImage">
+          <Key>
+            <PropertyRef Name="ReviewImageId" />
+          </Key>
+          <Property Name="ReviewImageId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ReviewId" Type="Int32" Nullable="false" />
+          <Property Name="ImagePath" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Review" Relationship="DBiphoneModel.FK_ReviewImages_Review" FromRole="ReviewImage" ToRole="Review" />
+        </EntityType>
+        <Association Name="FK_ReviewImages_Review">
+          <End Type="DBiphoneModel.Review" Role="Review" Multiplicity="1" />
+          <End Type="DBiphoneModel.ReviewImage" Role="ReviewImage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Review">
+              <PropertyRef Name="review_id" />
+            </Principal>
+            <Dependent Role="ReviewImage">
+              <PropertyRef Name="ReviewId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Voucher">
+          <End Type="DBiphoneModel.Voucher" Role="Voucher" Multiplicity="0..1" />
+          <End Type="DBiphoneModel.Order" Role="Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Voucher">
+              <PropertyRef Name="voucher_id" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="voucher_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DBiphoneModelStoreContainer" CdmEntityContainer="DBiphoneEntities1">
+          <EntitySetMapping Name="Accounts">
+            <EntityTypeMapping TypeName="DBiphoneModel.Account">
+              <MappingFragment StoreEntitySet="Account">
+                <ScalarProperty Name="lockDate" ColumnName="lockDate" />
+                <ScalarProperty Name="isLockedByAdmin" ColumnName="isLockedByAdmin" />
+                <ScalarProperty Name="isLocked" ColumnName="isLocked" />
+                <ScalarProperty Name="isVerified" ColumnName="isVerified" />
+                <ScalarProperty Name="account_id" ColumnName="account_id" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="idtype" ColumnName="idtype" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="full_name" ColumnName="full_name" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="address" ColumnName="address" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Carts">
+            <EntityTypeMapping TypeName="DBiphoneModel.Cart">
+              <MappingFragment StoreEntitySet="Cart">
+                <ScalarProperty Name="cart_id" ColumnName="cart_id" />
+                <ScalarProperty Name="account_id" ColumnName="account_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CartItems">
+            <EntityTypeMapping TypeName="DBiphoneModel.CartItem">
+              <MappingFragment StoreEntitySet="CartItem">
+                <ScalarProperty Name="cart_item_id" ColumnName="cart_item_id" />
+                <ScalarProperty Name="cart_id" ColumnName="cart_id" />
+                <ScalarProperty Name="product_id" ColumnName="product_id" />
+                <ScalarProperty Name="quantity" ColumnName="quantity" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Categories">
+            <EntityTypeMapping TypeName="DBiphoneModel.Category">
+              <MappingFragment StoreEntitySet="Category">
+                <ScalarProperty Name="category_id" ColumnName="category_id" />
+                <ScalarProperty Name="category_name" ColumnName="category_name" />
+                <ScalarProperty Name="category1_id" ColumnName="category1_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Category1">
+            <EntityTypeMapping TypeName="DBiphoneModel.Category1">
+              <MappingFragment StoreEntitySet="Category1">
+                <ScalarProperty Name="category1_id" ColumnName="category1_id" />
+                <ScalarProperty Name="company_name" ColumnName="company_name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderItems">
+            <EntityTypeMapping TypeName="DBiphoneModel.OrderItem">
+              <MappingFragment StoreEntitySet="OrderItem">
+                <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
+                <ScalarProperty Name="order_item_id" ColumnName="order_item_id" />
+                <ScalarProperty Name="order_id" ColumnName="order_id" />
+                <ScalarProperty Name="product_id" ColumnName="product_id" />
+                <ScalarProperty Name="quantity" ColumnName="quantity" />
+                <ScalarProperty Name="price" ColumnName="price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="DBiphoneModel.Product">
+              <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="stock" ColumnName="stock" />
+                <ScalarProperty Name="IsHot" ColumnName="IsHot" />
+                <ScalarProperty Name="IsFeatured" ColumnName="IsFeatured" />
+                <ScalarProperty Name="GiaKhuyenMai" ColumnName="GiaKhuyenMai" />
+                <ScalarProperty Name="product_id" ColumnName="product_id" />
+                <ScalarProperty Name="product_name" ColumnName="product_name" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="company_id" ColumnName="company_id" />
+                <ScalarProperty Name="category_id" ColumnName="category_id" />
+                <ScalarProperty Name="images" ColumnName="images" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Vouchers">
+            <EntityTypeMapping TypeName="DBiphoneModel.Voucher">
+              <MappingFragment StoreEntitySet="Voucher">
+                <ScalarProperty Name="is_active" ColumnName="is_active" />
+                <ScalarProperty Name="min_order_value" ColumnName="min_order_value" />
+                <ScalarProperty Name="end_date" ColumnName="end_date" />
+                <ScalarProperty Name="start_date" ColumnName="start_date" />
+                <ScalarProperty Name="discount_percent" ColumnName="discount_percent" />
+                <ScalarProperty Name="discount_amount" ColumnName="discount_amount" />
+                <ScalarProperty Name="code" ColumnName="code" />
+                <ScalarProperty Name="voucher_id" ColumnName="voucher_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Addresses">
+            <EntityTypeMapping TypeName="DBiphoneModel.Address">
+              <MappingFragment StoreEntitySet="Address">
+                <ScalarProperty Name="IsDefault" ColumnName="IsDefault" />
+                <ScalarProperty Name="Detail" ColumnName="Detail" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="RecipientName" ColumnName="RecipientName" />
+                <ScalarProperty Name="AccountId" ColumnName="AccountId" />
+                <ScalarProperty Name="AddressId" ColumnName="AddressId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Banners">
+            <EntityTypeMapping TypeName="DBiphoneModel.Banner">
+              <MappingFragment StoreEntitySet="Banner">
+                <ScalarProperty Name="product_id" ColumnName="product_id" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="is_active" ColumnName="is_active" />
+                <ScalarProperty Name="link" ColumnName="link" />
+                <ScalarProperty Name="image_path" ColumnName="image_path" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="banner_id" ColumnName="banner_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Orders">
+            <EntityTypeMapping TypeName="DBiphoneModel.Order">
+              <MappingFragment StoreEntitySet="Order">
+                <ScalarProperty Name="Vat" ColumnName="Vat" />
+                <ScalarProperty Name="voucher_id" ColumnName="voucher_id" />
+                <ScalarProperty Name="discount_amount" ColumnName="discount_amount" />
+                <ScalarProperty Name="shipping_fee" ColumnName="shipping_fee" />
+                <ScalarProperty Name="payment_method" ColumnName="payment_method" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="customer_name" ColumnName="customer_name" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="total_amount" ColumnName="total_amount" />
+                <ScalarProperty Name="order_date" ColumnName="order_date" />
+                <ScalarProperty Name="account_id" ColumnName="account_id" />
+                <ScalarProperty Name="order_id" ColumnName="order_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductVariants">
+            <EntityTypeMapping TypeName="DBiphoneModel.ProductVariant">
+              <MappingFragment StoreEntitySet="ProductVariant">
+                <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="stock" ColumnName="stock" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="color" ColumnName="color" />
+                <ScalarProperty Name="product_id" ColumnName="product_id" />
+                <ScalarProperty Name="variant_id" ColumnName="variant_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Reviews">
+            <EntityTypeMapping TypeName="DBiphoneModel.Review">
+              <MappingFragment StoreEntitySet="Review">
+                <ScalarProperty Name="Likes" ColumnName="Likes" />
+                <ScalarProperty Name="created_date" ColumnName="created_date" />
+                <ScalarProperty Name="comment" ColumnName="comment" />
+                <ScalarProperty Name="rating" ColumnName="rating" />
+                <ScalarProperty Name="account_id" ColumnName="account_id" />
+                <ScalarProperty Name="product_id" ColumnName="product_id" />
+                <ScalarProperty Name="review_id" ColumnName="review_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ReviewImages">
+            <EntityTypeMapping TypeName="DBiphoneModel.ReviewImage">
+              <MappingFragment StoreEntitySet="ReviewImages">
+                <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
+                <ScalarProperty Name="ReviewId" ColumnName="ReviewId" />
+                <ScalarProperty Name="ReviewImageId" ColumnName="ReviewImageId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

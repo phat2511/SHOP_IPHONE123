@@ -1,0 +1,73 @@
+﻿@model SHOP_IPHONE.Models.EditProfileViewModel
+
+@{
+    ViewBag.Title = "Chỉnh sửa thông tin cá nhân";
+    <link rel="stylesheet" href="~/Content/EditProfile.css" />
+}
+
+<h2>Chỉnh sửa thông tin cá nhân</h2>
+@if (TempData["Info"] != null)
+{
+    <div class="alert alert-info">@TempData["Info"]</div>
+}
+
+@if (ViewBag.Error != null)
+{
+    <div class="alert alert-danger">@ViewBag.Error</div>
+}
+
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(m => m.account_id)
+    <div class="form-group">
+        @Html.LabelFor(m => m.fullname)
+        @Html.TextBoxFor(m => m.fullname, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.fullname)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.username)
+        @Html.TextBoxFor(m => m.username, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.username)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.email)
+        @Html.TextBoxFor(m => m.email, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.email)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.phone)
+        @Html.TextBoxFor(m => m.phone, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.phone)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.address)
+        @Html.TextBoxFor(m => m.address, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.address)
+    </div>
+
+    <hr />
+    <h4>Đổi mật khẩu (tuỳ chọn)</h4>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.CurrentPassword)
+        @Html.PasswordFor(m => m.CurrentPassword, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.CurrentPassword)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.NewPassword)
+        @Html.PasswordFor(m => m.NewPassword, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.NewPassword)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.ConfirmPassword)
+        @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.ConfirmPassword)
+    </div>
+
+    <button type="submit" class="btn btn-success mt-3">Lưu thay đổi</button>
+}

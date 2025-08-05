@@ -1,0 +1,74 @@
+﻿/* Font setup */
+* {
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* Container giữ các box */
+.order-summary-container,
+.admin-summary-container {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+/* Box đơn hàng và admin */
+.order-box,
+.admin-box {
+    width: 220px;
+    padding: 25px 20px;
+    border-radius: 20px;
+    color: white;
+    background: linear-gradient(135deg, #0f0f0f 0%, #1e3c72 100%); /* Đen → xanh dương đậm */
+    box-shadow: 0 8px 20px rgba(30, 60, 114, 0.4); /* xanh dương đậm glow */
+    text-align: center;
+    position: relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+    .order-box:hover,
+    .admin-box:hover {
+        transform: scale(1.05);
+        box-shadow: 0 12px 30px rgba(0, 119, 255, 0.7); /* glow xanh mạnh hơn */
+    }
+
+/* Icon */
+.order-icon,
+.admin-icon {
+    font-size: 32px;
+    margin-bottom: 12px;
+    color: #4dabf7; /* xanh nhạt dễ nhìn */
+}
+
+/* Số đếm */
+.order-count,
+.admin-count {
+    font-size: 30px;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+/* Nhãn nhỏ */
+.order-label,
+.admin-label {
+    margin-top: 6px;
+    font-size: 14px;
+    color: #dcdcdc;
+    opacity: 0.9;
+}
+
+/* Link */
+.order-link,
+.admin-link {
+    display: inline-block;
+    margin-top: 12px;
+    font-size: 13px;
+    color: #4dabf7;
+    text-decoration: underline;
+}
+
+/* Màu gradient riêng nếu cần */
+.gradient-dark-blue {
+    background: linear-gradient(135deg, #101010 0%, #23395d 100%);
+}

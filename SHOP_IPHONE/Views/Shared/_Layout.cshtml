@@ -1,0 +1,349 @@
+﻿
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title - Truc xinh iu</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link rel="stylesheet" href="~/Content/Site.css" />
+    <link rel="stylesheet" href="~/Content/DanhMuc.css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    @RenderSection("Styles", required: false)
+
+</head>
+<body>
+    @if (ViewBag.HideHeader != true)
+    {
+        @* HEADER *@
+
+        <header class="custom-header py-3">
+            <div class="container d-flex justify-content-between align-items-center py-2">
+                <div class="logo-container">
+                    <a href="@Url.Action("Index", "Product")">
+                        <img src="https://cdn2.fptshop.com.vn/unsafe/640x0/filters:quality(100)/small/mb_logo_fstu_aar_5380a58fe4.png" alt="Mobile Store Logo" class="logo-img" />
+                    </a>
+                </div>
+                <div class="container">
+                    <!-- Thanh tìm kiếm -->
+                    <div class="search-box d-flex justify-content-center">
+                        @using (Html.BeginForm("Search", "Product", FormMethod.Get, new { @class = "search-form d-flex position-relative" }))
+                        {
+                            <input type="text" name="keyword" class="form-control rounded-pill ps-4" placeholder="Nhập tên điện thoại, máy tính, phụ kiện... cần tìm" />
+                            <button type="submit" class="search-button position-absolute rounded-circle">
+                                <i class="bi bi-search"></i> Tìm
+                            </button>
+                        }
+                    </div>
+
+                    Gợi ý từ khóa
+                    <div class="search-keywords text-center mt-2">
+                        <a href="@Url.Action("Search", "Product", new { keyword = "iPhone" })"  class="keyword">iPhone</a>
+                        <a href="@Url.Action("Search", "Product", new { keyword = "MacBook" })"  class="keyword">MacBook</a>
+                        <a href="@Url.Action("Search", "Product", new { keyword = "Apple Watch" })"  class="keyword">Apple Watch</a>
+                        <a href="@Url.Action("Search", "Product", new { keyword = "iPad" })"  class="keyword">iPad</a>
+                        <a href="@Url.Action("Search", "Product", new { keyword = "AirPods" })" class="keyword">AirPods</a>
+                    </div>
+            
+                </div>
+
+            </div>
+            <div class="auth-links d-flex justify-content-end px-3 py-2" style="margin-top: 10px">
+                <a href="/Cart" class="btn btn-outline-primary" btn">🛒</a>
+                @if (Session["username"] == null)
+                {
+                    <a href="@Url.Action("Login", "Account")" class="btn btn-outline-primary me-2" title="Đăng nhập">
+                        <i class="fa fa-user" ></i>
+                    </a>
+                }
+                else
+                {
+                   
+                    <div class="dropdown">
+                        <button class="btn btn-outline-dark dropdown-toggle" type="button" id="userMenu" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa fa-user-circle"></i> @Session["username"]
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userMenu">
+                            <li>
+                                <a class="dropdown-item" href="@Url.Action("UserProfile", "Account")">
+                                    <i class="fa fa-user"></i> Thông tin cá nhân
+                                </a>
+                            </li>
+
+
+                            @if (Session["role"] != null && Session["role"].ToString() != "2")  // Nếu không phải admin
+                            {
+                                <li>
+                                    <a class="dropdown-item" href="@Url.Action("MyOrders", "Order")">
+                                        <i class="fa fa-box"></i> Đơn hàng của tôi
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="@Url.Action("Index", "Address")">
+                                        <i class="fa fa-map-marker-alt"></i> Sổ địa chỉ nhận hàng
+                                    </a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li>
+                                    <a class="dropdown-item" href="@Url.Action("Index", "Admin")">
+                                        <i class="fa fa-tools"></i> Trang Admin
+                                    </a>
+                                </li>
+                            }
+                            @if (Session["role"] != null && (int)Session["role"] == (int)SHOP_IPHONE.Models.AccountType.Admin)
+                            {
+                                <li>
+                                    <a class="dropdown-item" href="@Url.Action("Index", "Voucher")">
+                                        <i class="fa fa-ticket-alt"></i> Quản lý Voucher
+                                    </a>
+                                </li>
+                            }
+                            <li><hr class="dropdown-divider" /></li>
+
+                            <li>
+                                <a class="dropdown-item text-danger" href="@Url.Action("Logout", "Account")">
+                                    <i class="fa fa-sign-out-alt"></i> Đăng xuất
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                }
+
+                <style>
+                    .auth-links {
+                        position: absolute;
+                        top: 10px;
+                        right: 20px;
+                        z-index: 1000;
+                    }
+
+                        .auth-links .btn {
+                            margin-left: 5px;
+                            padding: 5px 10px;
+                            font-size: 14px;
+                        }
+
+                        .auth-links span {
+                            font-weight: bold;
+                        }
+                </style>
+            </div>
+            <style>
+                .logo-container {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+
+                .logo-img {
+                    height: 70px;
+                    width: 350px;
+                    object-fit: contain;
+                  
+                }
+
+                .auth-links {
+                    position: absolute;
+                    top: 10px;
+                    right: 20px;
+                    z-index: 1000;
+                }
+
+                    .auth-links .btn {
+                        margin-left: 5px;
+                        padding: 5px 10px;
+                        font-size: 14px;
+                        background-color: black;
+                    }
+
+                    .auth-links span {
+                        font-weight: bold;
+                    }
+
+                .cart-iconCart {
+                    background-color: black;
+                    color: white;
+                    border: none;
+                    font-size: 17px;
+                    padding: 6px 12px;
+                    border-radius: 8px;
+                    transition: transform 0.3s ease;
+                }
+
+                    .cart-iconCart:hover {
+                        transform: scale(1.1);
+                        background-color: #333;
+                    }
+
+                .search-button {
+                    right: 6px;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    border: none;
+                    background-color: black;
+                    color: white;
+                    width: 36px;
+                    height: 36px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    box-shadow: 0 0 4px rgba(0,0,0,0.1);
+                }
+
+                .search-keywords {
+                    font-size: 14px;
+                    
+                }
+
+                    .search-keywords .keyword {
+                        color: white;
+                        margin: 0 10px;
+                        text-decoration: none;
+                    }
+
+                        .search-keywords .keyword:hover {
+                            text-decoration: underline;
+                        }
+
+                .custom-header {
+                    background: linear-gradient(to right, #111827, #111827);
+                    color: #111827;
+                    position: relative;
+                }
+
+                .search-form {
+                    position: relative;
+                }
+
+                    .search-form input.form-control {
+                        width:600px;
+                        height: 48px;
+                        border: none;
+                        font-size: 14px;
+                    }
+
+                .admin-icon-link {
+                    border: none !important;
+                    background: transparent;
+                    padding: 0;
+                }
+
+                    .admin-icon-link i {
+                        font-size: 30px;
+                        color: white;
+                        transition: transform 0.3s ease;
+                    }
+
+                        .admin-icon-link i:hover {
+                            transform: scale(1.2);
+                            color: #ffd700;
+                        }
+
+                .Chinhsach {
+                    color: white;
+                    margin: 0 10px;
+                    text-decoration: none;
+                }
+            </style>
+        </header>
+    }
+
+
+    <!-- BANNER -->
+    @RenderSection("Banner", required: false)
+
+    <!-- NỘI DUNG CHÍNH -->
+    <main class="container py-4">
+        @RenderBody()
+    </main>
+
+    <!-- FOOTER -->
+    @if (ViewBag.HideFooter != true)
+    {
+        <footer class="bg-dark text-white mt-5">
+            <div class="container py-4">
+                <div class="row">
+                    <div class="col-md-4">
+                        <h5>Kết nối với Mobile Store</h5>
+                        <a href="https://vi-vn.facebook.com/" class="text-blue me-2">
+                            <img src="https://cdn2.fptshop.com.vn/svg/facebook_icon_8543190720.svg" />
+                        </a>
+                        <a href="https://www.youtube.com/" class="text-red me-2">
+                            <img src="https://cdn2.fptshop.com.vn/svg/youtube_icon_b492d61ba5.svg" />
+                        </a>
+                        <a href="https://www.tiktok.com/explore" class="text-red me-2">
+                            <img src="https://cdn2.fptshop.com.vn/svg/tiktok_icon_faabbeeb61.svg" />
+                        </a>
+                        <a href="https://chat.zalo.me/" class="text-red me-2">
+                            <img src="https://cdn2.fptshop.com.vn/svg/zalo_icon_8cbef61812.svg" />
+                        </a>
+
+                        <h5>Liên hệ</h5>
+                        <p>Nhóm trưởng: Nguyễn Gia Bảo</p>
+                        <p>Kĩ thuật: Nguyễn Phạm Xuân Hoàng</p>
+                        <p>Email: phatnguyen2511@gmail.com</p>
+                        <p>Hotline: 1900 1234 </p>
+                    </div>
+                    <div class="col-md-4">
+                        <h5>Về chúng tôi</h5>
+                        <p>Chuyên cung cấp các sản phẩm công nghệ chính hãng.</p>
+                        <p>Đầy đủ các mặt hàng công nghệ.</p>
+                        <p>Thanh toán nhanh gọn.</p>
+                        <p>Liên kết với các cửa hàng lớn.</p>
+
+
+                    </div>
+                    <div class="Chinhsach-list col-md-4">
+                        <h5>CHÍNH SÁCH</h5>
+                        <ul>
+                            <li><a href="@Url.Action("BaoHanh", "Chinhsach")" class="Chinhsach">Chính sách bảo hành</a></li>
+                            <li><a href="@Url.Action("BaoMat", "Chinhsach")" class="Chinhsach">Chính sách bảo mật</a></li>
+                            <li><a href="@Url.Action("Giaohang", "Chinhsach")" class="Chinhsach">Chính sách giao hàng</a></li>
+                            <!-- Thêm các chính sách khác -->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="container text-center">
+                <p class="mb-2">Các đơn vị hợp tác</p>
+                <div class="d-flex flex-column flex-md-row justify-content-center align-items-center gap-4">
+                    <!-- F.Studio -->
+                    <div>
+                        <p class="mb-1">Cửa hàng ủy quyền bởi Apple:</p>
+                        <a href="https://fstudiobyfpt.com.vn/fcare" target="_blank" class="text-white text-decoration-none">
+                            <strong>F.Studio</strong> by <img src="https://cdn2.fptshop.com.vn/unsafe/640x0/filters:quality(100)/small/mb_logo_fstu_aar_5380a58fe4.png" alt="FPT" style="height: 20px;" />
+                        </a>
+                    </div>
+
+                    <!-- F.Care -->
+                    <div>
+                        <p class="mb-1">Trung tâm bảo hành ủy quyền Apple:</p>
+                        <a href="https://fstudiobyfpt.com.vn/" target="_blank" class="text-white text-decoration-none">
+                            <strong>F.Care</strong> by <img src="https://cdn2.fptshop.com.vn/unsafe/640x0/filters:quality(100)/small/mb_logo_fstu_aar_5380a58fe4.png" alt="FPT" style="height: 20px;" />
+                        </a>
+                    </div>
+
+                    <!-- Huflit -->
+                    <div>
+                        <p class="mb-1">Trường đại học ngoại ngữ-tin học Tp.HCM</p>
+                        <a href="https://huflit.edu.vn/" target="_blank" class="text-white text-decoration-none">
+                            <img src="https://courses.huflit.edu.vn/pluginfile.php/1/core_admin/logo/0x200/1749005256/Logo-LMS.png" alt="Huflit" style="height: 24px;" />
+                            <strong>Huflit</strong>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="container text-center">
+                <a>------------------------------------------------------------------------------------------------------------------------</a>
+                <p> 1726 - 2024 Công Ty Cổ Phần Bán Lẻ Mobile Store • Địa chỉ: Trong trường huflit • GPĐKKD số 111110 do Sở KHĐT TP.HCM cấp ngày: Hôm qua.GP số 47/GP-TTĐT do sở TTTT TP HCM cấp ngày: Hôm qua  Điện thoại: (028) 1122 2005 Email: hêheh@gmail.com  Chịu trách nhiệm nội dung: Nguyễn Phạm Xuân Hoàng.</p>
+            </div>
+        </footer>
+    }
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+@RenderSection("Scripts", required: false)
+</html>

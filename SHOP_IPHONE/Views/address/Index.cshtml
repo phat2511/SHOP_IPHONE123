@@ -1,0 +1,30 @@
+﻿@model List<SHOP_IPHONE.Models.Address>
+
+@{
+    ViewBag.Title = "Sổ địa chỉ nhận hàng";
+}
+
+<h2>Sổ địa chỉ nhận hàng</h2>
+<a href="@Url.Action("Create")" class="btn btn-success mb-3">+ Thêm địa chỉ</a>
+
+<table class="table table-bordered">
+    <tr>
+        <th>Người nhận</th>
+        <th>Số điện thoại</th>
+        <th>Chi tiết</th>
+        <th>Thao tác</th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.RecipientName</td>
+            <td>@item.Phone</td>
+            <td>@item.Detail</td>
+            <td>
+                <a class="btn btn-sm btn-warning" href="@Url.Action("Edit", new { id = item.AddressId })">Sửa</a>
+                <a class="btn btn-sm btn-danger" href="@Url.Action("Delete", new { id = item.AddressId })">Xóa</a>
+            </td>
+        </tr>
+    }
+</table>
+<h2>@Html.ActionLink("Quay lại", "Index", "Product", null, new { @class = "btn btn-secondary" })</h2>

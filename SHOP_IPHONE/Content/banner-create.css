@@ -1,0 +1,91 @@
+﻿/* Vùng form thêm banner */
+.form-container {
+    max-width: 600px;
+    margin: auto;
+    background: #fff;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+    .form-container h2 {
+        text-align: center;
+        margin-bottom: 25px;
+        font-weight: bold;
+        color: #2c3e50;
+    }
+
+.form-group label {
+    font-weight: 500;
+    color: #34495e;
+}
+
+.form-control {
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+.btn-primary {
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-weight: 600;
+    background-color: #007bff;
+    border: none;
+}
+
+.btn-secondary {
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-weight: 600;
+    background-color: #6c757d;
+    border: none;
+}
+
+/* ====== BẢNG DANH SÁCH BANNER ====== */
+
+/* Header bảng */
+table thead {
+    background-color: #1c2b36; /* Xanh đen đậm */
+    color: white;
+}
+
+/* Hàng trong bảng */
+table tr {
+    vertical-align: middle;
+}
+
+/* Ảnh trong bảng */
+table img {
+    max-width: 100px;
+    border-radius: 6px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+/* Nút Sửa */
+.btn-edit {
+    background-color: #17a2b8; /* Xanh biển nhẹ */
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-weight: 500;
+}
+
+/* Nút Xoá */
+.btn-delete {
+    background-color: #dc3545; /* Đỏ cam đậm */
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-weight: 500;
+}
+
+/* Hover */
+.btn-edit:hover {
+    background-color: #138496;
+}
+
+.btn-delete:hover {
+    background-color: #c82333;
+}

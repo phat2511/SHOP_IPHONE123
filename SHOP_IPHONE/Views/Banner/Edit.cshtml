@@ -1,0 +1,36 @@
+﻿@model SHOP_IPHONE.Models.Banner
+@{
+    ViewBag.Title = "Sửa Banner";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Sửa Banner</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.banner_id)
+
+    <div class="mb-3">
+        @Html.LabelFor(m => m.title)
+        @Html.TextBoxFor(m => m.title, new { @class = "form-control" })
+    </div>
+
+    <div class="mb-3">
+        @Html.LabelFor(m => m.image_path, "Link hình ảnh (URL)")
+        @Html.TextBoxFor(m => m.image_path, new { @class = "form-control" })
+    </div>
+
+    <div class="mb-3">
+        @Html.LabelFor(m => m.product_id, "Product ID")
+        @Html.TextBoxFor(m => m.product_id, new { @class = "form-control" })
+    </div>
+
+    <div class="form-check mb-3">
+        @Html.CheckBox("is_active", Model.is_active ?? false, new { @class = "form-check-input", id = "is_active" })
+        <label class="form-check-label" for="is_active">Hoạt động</label>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Cập nhật</button>
+    <a href="@Url.Action("Index", "Banner")" class="btn btn-secondary ms-2">Hủy</a>
+}

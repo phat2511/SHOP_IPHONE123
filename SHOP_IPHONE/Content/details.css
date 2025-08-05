@@ -1,0 +1,130 @@
+﻿body, .product-details, .info-container, .card, .form-control, .btn, .alert, .variant-card, .variant-display-card {
+    font-family: 'Segoe UI', Arial, Tahoma, 'sans-serif';
+}
+.product-details {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+    padding: 32px 24px 24px 24px;
+    margin-bottom: 32px;
+}
+.info-container h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+.info-container h4 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+.price {
+    color: #e53935;
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+.GiaKhuyenMai {
+    color: #43a047;
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin-bottom: 8px;
+}
+.GiaKhuyenMai.text-muted {
+    color: #888;
+}
+.description {
+    margin-bottom: 8px;
+    color: #444;
+}
+.company, .company_id {
+    color: #607d8b;
+    font-size: 0.98rem;
+    margin-bottom: 4px;
+}
+.stock {
+    color: #1565c0;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+.image-container {
+    margin: 16px 0 12px 0;
+    text-align: center;
+}
+.images {
+    max-width: 320px;
+    max-height: 320px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+.variant-card, .variant-display-card {
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    border: 1px solid #e0e0e0;
+    background: #fafbfc;
+    margin-bottom: 16px;
+    transition: box-shadow 0.2s, transform 0.2s;
+}
+.variant-card:hover, .variant-display-card:hover {
+    box-shadow: 0 6px 24px rgba(0,0,0,0.13);
+    transform: translateY(-2px) scale(1.01);
+}
+.variant-card .card-body, .variant-display-card .card-body {
+    padding: 1rem 0.8rem 0.8rem 0.8rem;
+}
+.variant-card .card-title, .variant-display-card .card-title {
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+.variant-card .card-text, .variant-display-card .card-text {
+    font-size: 0.98rem;
+    margin-bottom: 0.25rem;
+}
+.variant-card .btn-group-sm .btn, .variant-display-card .btn-group-sm .btn {
+    font-size: 0.85rem;
+    padding: 0.3rem 0.7rem;
+}
+.btn-success {
+    background: linear-gradient(90deg, #43e97b 0%, #38f9d7 100%);
+    border: none;
+    color: #fff;
+    font-weight: 600;
+    box-shadow: 0 2px 8px rgba(67,233,123,0.08);
+}
+.btn-success:disabled, .btn-success[disabled] {
+    background: #bdbdbd;
+    color: #fff;
+    border: none;
+}
+.btn-primary {
+    background: linear-gradient(90deg, #2196f3 0%, #21cbf3 100%);
+    border: none;
+    color: #fff;
+    font-weight: 600;
+}
+.btn-primary:hover {
+    background: linear-gradient(90deg, #1976d2 0%, #00bcd4 100%);
+}
+.alert-danger {
+    background: #ffebee;
+    color: #c62828;
+    border-left: 4px solid #e53935;
+}
+.alert-info {
+    background: #e3f2fd;
+    color: #1565c0;
+    border-left: 4px solid #2196f3;
+}
+@media (max-width: 768px) {
+    .product-details {
+        padding: 16px 4px 12px 4px;
+    }
+    .images {
+        max-width: 100%;
+        max-height: 180px;
+    }
+    .variant-card, .variant-display-card {
+        margin-bottom: 10px;
+    }
+}

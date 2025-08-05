@@ -1,0 +1,44 @@
+﻿@model List<SHOP_IPHONE.Models.Order>
+
+@{
+    <link rel="stylesheet" href="~/Content/SiteReturns.css" />
+    ViewBag.Title = "Đơn hàng đã hủy";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="return-title">Đơn hàng đã hủy</h2>
+<div class="table-wrapper">
+    <table class="modern-table">
+        <thead>
+            <tr>
+                <th>Mã đơn</th>
+                <th>Ngày đặt</th>
+                <th>Khách hàng</th>
+                <th>Tổng tiền</th>
+                <th>Thanh toán</th>
+                <th>Trạng thái</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var order in Model)
+            {
+                <tr>
+                    <td data-label="Mã đơn">@order.order_id</td>
+                    <td data-label="Ngày đặt">@(((DateTime)order.order_date).ToString("dd/MM/yyyy"))</td>
+                    <td data-label="Khách hàng">
+                        <strong>@order.customer_name</strong><br />
+                        <span>@order.phone</span><br />
+                        <span>@order.address</span>
+                    </td>
+                    <td data-label="Tổng tiền">@String.Format("{0:N0}", order.total_amount) ₫</td>
+                    <td data-label="Thanh toán"><i class="fas fa-credit-card"></i> @order.payment_method</td>
+                    <td data-label="Trạng thái"><span class="order-status">@order.status</span></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    
+</div>
+<h2>
+    @Html.ActionLink("Quay lại", "Manage", "Order", null, new { @class = "btn btn-secondary", style = "text-decoration:none;" })
+</h2>

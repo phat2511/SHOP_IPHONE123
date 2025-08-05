@@ -1,0 +1,503 @@
+﻿@model SHOP_IPHONE.Models.OrderModel
+@using SHOP_IPHONE.Models
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="success-container">
+    <!-- Header thành công -->
+    <div class="success-header">
+        <div class="success-icon">
+            <i class="fa fa-check-circle"></i>
+        </div>
+        <h1 class="success-title">Đặt hàng thành công!</h1>
+        <p class="success-subtitle">Cảm ơn bạn đã mua sắm tại F.Studio</p>
+    </div>
+
+    @if (Model != null)
+    {
+        <!-- Thông tin đơn hàng -->
+        <div class="order-info-card">
+            <div class="order-header">
+                <h3><i class="fa fa-receipt"></i> Thông tin đơn hàng</h3>
+            </div>
+            
+            <div class="order-details">
+                <div class="order-id-section">
+                    <div class="order-id">
+                        <span class="label">Mã đơn hàng:</span>
+                        <span class="value">#@Model.OrderId</span>
+                    </div>
+                    <div class="order-status">
+                        <span class="status-badge success">
+                            <i class="fa fa-check"></i> Thành công
+                        </span>
+                    </div>
+                </div>
+
+                <div class="order-summary">
+                    <div class="summary-item">
+                        <i class="fa fa-calendar"></i>
+                        <span class="label">Ngày đặt:</span>
+                        <span class="value">@Model.OrderDate.ToString("dd/MM/yyyy HH:mm")</span>
+                    </div>
+                    <div class="summary-item">
+                        <i class="fa fa-money-bill-wave"></i>
+                        <span class="label">Tổng tiền:</span>
+                        <span class="value total-amount">@String.Format("{0:N0}", Model.TotalAmount) ₫</span>
+                    </div>
+                    <div class="summary-item">
+                        <i class="fa fa-credit-card"></i>
+                        <span class="label">Phương thức:</span>
+                        <span class="value">@Model.PaymentMethod</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Thông tin khách hàng -->
+        <div class="customer-info-card">
+            <div class="card-header">
+                <h3><i class="fa fa-user"></i> Thông tin khách hàng</h3>
+            </div>
+            <div class="customer-details">
+                <div class="customer-item">
+                    <i class="fa fa-user-circle"></i>
+                    <span class="label">Họ tên:</span>
+                    <span class="value">@Model.CustomerName</span>
+                </div>
+                <div class="customer-item">
+                    <i class="fa fa-phone"></i>
+                    <span class="label">Số điện thoại:</span>
+                    <span class="value">@Model.Phone</span>
+                </div>
+                <div class="customer-item">
+                    <i class="fa fa-map-marker-alt"></i>
+                    <span class="label">Địa chỉ:</span>
+                    <span class="value">@Model.Address</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Danh sách sản phẩm -->
+        <div class="products-card">
+            <div class="card-header">
+                <h3><i class="fa fa-shopping-bag"></i> Sản phẩm đã đặt</h3>
+            </div>
+            <div class="products-list">
+                @foreach (var item in Model.Items)
+                {
+                    <div class="product-item">
+                        <div class="product-info">
+                            <div class="product-name">@item.ProductName</div>
+                            <div class="product-details">
+                                <span class="quantity">Số lượng: @item.Quantity</span>
+                                <span class="price">@String.Format("{0:N0}", item.Price) ₫</span>
+                            </div>
+                        </div>
+                        <div class="product-total">
+                            @String.Format("{0:N0}", item.Price * item.Quantity) ₫
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <!-- Nút hành động -->
+        <div class="action-buttons">
+            <a href="@Url.Action("Index", "Product")" class="btn btn-continue">
+                <i class="fa fa-shopping-cart"></i> Tiếp tục mua sắm
+            </a>
+            <a href="#" class="btn btn-track" onclick="alert('Tính năng đang phát triển!')">
+                <i class="fa fa-truck"></i> Theo dõi đơn hàng
+            </a>
+        </div>
+    }
+    else
+    {
+        <div class="error-card">
+            <div class="error-icon">
+                <i class="fa fa-exclamation-triangle"></i>
+            </div>
+            <h3>Không tìm thấy thông tin đơn hàng</h3>
+            <p>Có thể đã xảy ra lỗi trong quá trình xử lý. Vui lòng liên hệ hỗ trợ.</p>
+            <a href="@Url.Action("Index", "Product")" class="btn btn-primary">
+                <i class="fa fa-home"></i> Về trang chủ
+            </a>
+        </div>
+    }
+</div>
+
+<style>
+    .success-container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        min-height: 100vh;
+    }
+
+    /* Header thành công */
+    .success-header {
+        text-align: center;
+        margin-bottom: 40px;
+        padding: 40px 20px;
+        background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        border-radius: 20px;
+        color: white;
+        box-shadow: 0 10px 30px rgba(40, 167, 69, 0.3);
+    }
+
+    .success-icon {
+        font-size: 80px;
+        margin-bottom: 20px;
+        animation: bounce 2s infinite;
+    }
+
+    .success-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 10px;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .success-subtitle {
+        font-size: 1.2rem;
+        opacity: 0.9;
+        margin: 0;
+    }
+
+    /* Card chung */
+    .order-info-card,
+    .customer-info-card,
+    .products-card {
+        background: white;
+        border-radius: 16px;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        margin-bottom: 24px;
+        overflow: hidden;
+        border: 1px solid #e9ecef;
+    }
+
+    .card-header {
+        background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+        color: white;
+        padding: 20px 25px;
+        border-bottom: 1px solid #e9ecef;
+    }
+
+    .card-header h3 {
+        margin: 0;
+        font-size: 1.3rem;
+        font-weight: 600;
+    }
+
+    .card-header i {
+        margin-right: 10px;
+    }
+
+    /* Thông tin đơn hàng */
+    .order-details {
+        padding: 25px;
+    }
+
+    .order-id-section {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 25px;
+        padding: 20px;
+        background: #f8f9fa;
+        border-radius: 12px;
+        border: 2px solid #e9ecef;
+    }
+
+    .order-id .label {
+        font-weight: 600;
+        color: #6c757d;
+        margin-right: 10px;
+    }
+
+    .order-id .value {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #007bff;
+    }
+
+    .status-badge {
+        padding: 8px 16px;
+        border-radius: 20px;
+        font-weight: 600;
+        font-size: 0.9rem;
+    }
+
+    .status-badge.success {
+        background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        color: white;
+    }
+
+    .order-summary {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+    }
+
+    .summary-item {
+        display: flex;
+        align-items: center;
+        padding: 15px;
+        background: #f8f9fa;
+        border-radius: 10px;
+        border-left: 4px solid #007bff;
+    }
+
+    .summary-item i {
+        font-size: 1.2rem;
+        color: #007bff;
+        margin-right: 12px;
+        width: 20px;
+    }
+
+    .summary-item .label {
+        font-weight: 600;
+        color: #495057;
+        margin-right: 8px;
+    }
+
+    .summary-item .value {
+        font-weight: 600;
+        color: #212529;
+    }
+
+    .total-amount {
+        color: #dc3545 !important;
+        font-size: 1.1rem;
+    }
+
+    /* Thông tin khách hàng */
+    .customer-details {
+        padding: 25px;
+    }
+
+    .customer-item {
+        display: flex;
+        align-items: center;
+        padding: 15px 0;
+        border-bottom: 1px solid #e9ecef;
+    }
+
+    .customer-item:last-child {
+        border-bottom: none;
+    }
+
+    .customer-item i {
+        font-size: 1.2rem;
+        color: #007bff;
+        margin-right: 15px;
+        width: 20px;
+    }
+
+    .customer-item .label {
+        font-weight: 600;
+        color: #495057;
+        margin-right: 10px;
+        min-width: 120px;
+    }
+
+    .customer-item .value {
+        color: #212529;
+        font-weight: 500;
+    }
+
+    /* Danh sách sản phẩm */
+    .products-list {
+        padding: 25px;
+    }
+
+    .product-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px;
+        margin-bottom: 10px;
+        background: #f8f9fa;
+        border-radius: 10px;
+        border: 1px solid #e9ecef;
+        transition: all 0.3s ease;
+    }
+
+    .product-item:hover {
+        background: #e9ecef;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .product-item:last-child {
+        margin-bottom: 0;
+    }
+
+    .product-info {
+        flex: 1;
+    }
+
+    .product-name {
+        font-weight: 600;
+        color: #212529;
+        margin-bottom: 5px;
+        font-size: 1.1rem;
+    }
+
+    .product-details {
+        display: flex;
+        gap: 20px;
+        color: #6c757d;
+        font-size: 0.9rem;
+    }
+
+    .product-total {
+        font-weight: 700;
+        color: #dc3545;
+        font-size: 1.1rem;
+    }
+
+    /* Nút hành động */
+    .action-buttons {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+        margin-top: 30px;
+        flex-wrap: wrap;
+    }
+
+    .btn {
+        padding: 15px 30px;
+        border-radius: 12px;
+        font-weight: 600;
+        font-size: 1rem;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
+    }
+
+    .btn-continue {
+        background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+        color: white;
+        box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
+    }
+
+    .btn-continue:hover {
+        background: linear-gradient(135deg, #0056b3 0%, #004085 100%);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0, 123, 255, 0.4);
+        color: white;
+        text-decoration: none;
+    }
+
+    .btn-track {
+        background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
+        color: white;
+        box-shadow: 0 4px 15px rgba(108, 117, 125, 0.3);
+    }
+
+    .btn-track:hover {
+        background: linear-gradient(135deg, #495057 0%, #343a40 100%);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(108, 117, 125, 0.4);
+        color: white;
+        text-decoration: none;
+    }
+
+    /* Card lỗi */
+    .error-card {
+        text-align: center;
+        background: white;
+        border-radius: 16px;
+        padding: 40px;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    }
+
+    .error-icon {
+        font-size: 60px;
+        color: #dc3545;
+        margin-bottom: 20px;
+    }
+
+    .error-card h3 {
+        color: #dc3545;
+        margin-bottom: 15px;
+    }
+
+    .error-card p {
+        color: #6c757d;
+        margin-bottom: 25px;
+    }
+
+    /* Animation */
+    @@keyframes bounce {
+        0%, 20%, 50%, 80%, 100% {
+            transform: translateY(0);
+        }
+        40% {
+            transform: translateY(-10px);
+        }
+        60% {
+            transform: translateY(-5px);
+        }
+    }
+
+    /* Responsive */
+    @@media (max-width: 768px) {
+        .success-container {
+            padding: 15px;
+        }
+
+        .success-title {
+            font-size: 2rem;
+        }
+
+        .order-id-section {
+            flex-direction: column;
+            gap: 15px;
+            text-align: center;
+        }
+
+        .order-summary {
+            grid-template-columns: 1fr;
+        }
+
+        .action-buttons {
+            flex-direction: column;
+        }
+
+        .btn {
+            width: 100%;
+            justify-content: center;
+        }
+
+        .customer-item {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 5px;
+        }
+
+        .customer-item .label {
+            min-width: auto;
+        }
+
+        .product-item {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .product-details {
+            flex-direction: column;
+            gap: 5px;
+        }
+    }
+</style>

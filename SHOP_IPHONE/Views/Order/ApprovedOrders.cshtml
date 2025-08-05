@@ -1,0 +1,41 @@
+﻿@model List<SHOP_IPHONE.Models.Order>
+@{
+    <link rel="stylesheet" href="~/Content/SiteApproved.css" />
+
+    var orders = ViewBag.Orders as List<SHOP_IPHONE.Models.Order>;
+    ViewBag.Title = "Danh sách đơn đã xác nhận";
+}
+
+<h2>✅ Danh sách đơn đã xác nhận</h2>
+
+
+<div class="table-wrapper">
+    <table class="confirmed-table">
+        <thead>
+            <tr>
+                <th>Mã đơn</th>
+                <th>Khách hàng</th>
+                <th>Ngày đặt</th>
+                <th>SDT</th>
+                <th>Tổng tiền</th>
+                <th>Trạng thái</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>#@item.order_id</td>
+                    <td>@item.customer_name</td>
+                    <td>@item.order_date</td>
+                    <td>@item.phone</td>
+                    <td>@String.Format("{0:N0}", item.total_amount) VNĐ</td>
+                    <td>@item.status</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<h2>
+    @Html.ActionLink("Quay lại", "Manage", "Order", null, new { @class = "btn btn-secondary", style = "text-decoration:none;" })
+</h2>

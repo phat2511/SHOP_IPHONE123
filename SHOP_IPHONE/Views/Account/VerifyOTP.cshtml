@@ -1,0 +1,15 @@
+﻿
+@{
+    ViewBag.Title = "VerifyOTP";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Nhập mã xác nhận</h2>
+
+@using (Html.BeginForm())
+{
+    <label>Mã xác nhận:</label>
+    <input type="text" name="otp" class="form-control" required />
+    <div class="text-danger">@ViewBag.Error</div>
+    <button class="btn btn-success mt-2">Xác nhận</button>
+}

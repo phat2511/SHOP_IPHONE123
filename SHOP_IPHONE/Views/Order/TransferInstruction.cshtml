@@ -1,0 +1,104 @@
+﻿@model SHOP_IPHONE.Models.ConfirmOrderViewModel
+
+@{
+    ViewBag.Title = "Hướng dẫn chuyển khoản";
+
+    var detailList = ViewBag.PaymentDetails as List<SHOP_IPHONE.Models.PaymentMethodDetail>;
+    SHOP_IPHONE.Models.PaymentMethodDetail detail = null;
+
+    if (detailList != null)
+    {
+        detail = detailList.FirstOrDefault(p => p.MethodName == Model.SelectedPaymentMethod);
+    }
+
+    var subtotal = Model.CartItems.Sum(x => (x.Price ?? 0) * x.Quantity);
+    var vat = subtotal * 0.1m;
+    var shipping = Model.ShippingFee;
+    var total = subtotal + vat + shipping;
+}
+
+<div class="container py-4">
+    <h2 class="mb-4">Hướng dẫn chuyển khoản</h2>
+
+    @if (TempData["Debug"] != null)
+    {
+        <div class="alert alert-info">@TempData["Debug"]</div>
+    }
+
+    @if (Model.SelectedPaymentMethod == "Chuyển khoản" && detail != null)
+    {
+        <div class="border p-3 mb-3 rounded bg-light">
+            <strong>@detail.DisplayName</strong>
+
+            <p><strong>Mã đơn hàng:</strong> @($"DH{Model.OrderId}")</p>
+            <p><strong>Nội dung chuyển khoản:</strong> @($"DH{Model.OrderId}")</p>
+
+            @if (!string.IsNullOrEmpty(detail.QrCodeUrl))
+            {
+                <div class="mb-3">
+                    <img src="@Url.Content(detail.QrCodeUrl)" width="200" class="img-thumbnail" />
+                </div>
+            }
+
+            @if (!string.IsNullOrEmpty(detail.EwalletNumber))
+            {
+                <p><strong>Số ví:</strong> @detail.EwalletNumber</p>
+            }
+
+            <p class="text-muted">Vui lòng chuyển khoản đúng số tiền, đúng nội dung để hệ thống xử lý nhanh chóng.</p>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-warning">
+            Không tìm thấy thông tin thanh toán phù hợp.
+        </div>
+    }
+
+    @if (Model.CartItems != null && Model.CartItems.Any())
+    {
+        <h4 class="mt-4">Chi tiết đơn hàng</h4>
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Sản phẩm</th>
+                        <th>Số lượng</th>
+                        <th>Đơn giá</th>
+                        <th>Thành tiền</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.CartItems)
+                    {
+                        <tr>
+                            <td>@item.ProductName</td>
+                            <td>@item.Quantity</td>
+                            <td>@String.Format("{0:N0}", item.Price ?? 0) ₫</td>
+                            <td>@String.Format("{0:N0}", (item.Price ?? 0) * item.Quantity) ₫</td>
+                        </tr>
+                    }
+                    <tr>
+                        <td colspan="3" class="text-end"><strong>Thuế VAT (10%)</strong></td>
+                        <td>@String.Format("{0:N0}", vat) ₫</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <ul class="list-unstyled mt-2">
+            <li><strong>Tạm tính:</strong> @String.Format("{0:N0}", subtotal) ₫</li>
+            <li><strong>Phí vận chuyển:</strong> @String.Format("{0:N0}", shipping) ₫</li>
+            <li><strong>Tổng thanh toán:</strong> <span class="text-danger fw-bold">@String.Format("{0:N0}", total - Model.DiscountAmount) ₫</span></li>
+        </ul>
+    }
+    else
+    {
+        <p class="text-danger">Không tìm thấy chi tiết đơn hàng.</p>
+    }
+
+    <form method="post" action="@Url.Action("ConfirmTransfer", "Order")">
+        @Html.AntiForgeryToken()
+        <button type="submit" class="btn btn-success mt-4">Tôi đã chuyển khoản</button>
+    </form>
+</div>

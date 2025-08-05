@@ -1,0 +1,122 @@
+﻿@model IEnumerable<SHOP_IPHONE.Models.Banner>
+
+@{
+    ViewBag.Title = "Quản lý Banner";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+@section Styles {
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* MÀU TIÊU ĐỀ: xanh đen đậm */
+        thead tr {
+            background-color: #0f1a24; /* màu xanh đen dậm */
+            color: #ffffff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        thead th {
+            padding: 12px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        tbody td {
+            padding: 10px;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+            tbody td img {
+                max-width: 100px;
+                border-radius: 8px;
+                box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+            }
+
+        .btn-edit {
+            background-color: #17a2b8;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+
+        .btn-delete {
+            background-color: #dc3545;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+
+            .btn-edit:hover,
+            .btn-delete:hover {
+                opacity: 0.9;
+            }
+
+        .btn-success {
+            background-color: #28a745;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .table thead {
+            background-color: #0d1b2a; /* xanh đen đậm */
+            color: white;
+        }
+
+        h2 {
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+    </style>
+}
+
+<h2>Danh sách Banner</h2>
+
+<!-- Nút thêm mới -->
+<div class="mb-3 text-end">
+    <a href="@Url.Action("Create", "Banner")" class="btn btn-success">
+        <i class="bi bi-plus-circle"></i> Thêm Banner
+    </a>
+</div>
+
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Tiêu đề</th>
+            <th>Ảnh</th>
+            <th>Trạng thái</th>
+            <th>Ngày tạo</th>
+            <th>Hành động</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var b in Model)
+        {
+            <tr>
+                <td>@b.title</td>
+                <td><img src="@b.image_path style="max-width:100px;" /></td>
+                <td>@(b.is_active == true ? "Hiển thị" : "Ẩn")</td>
+                <td>@(b.created_at?.ToString("dd/MM/yyyy HH:mm:ss"))</td>
+                <td>
+                    <a href="@Url.Action("Edit", "Banner", new { id = b.banner_id })" class="btn-edit">Sửa</a>
+                    <a href="@Url.Action("Delete", "Banner", new { id = b.banner_id })" class="btn-delete ms-2">Xoá</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<h2>
+    @Html.ActionLink("Quay lại", "Index", "Admin", null, new { @class = "btn btn-secondary", style = "text-decoration:none;" })
+</h2>
+

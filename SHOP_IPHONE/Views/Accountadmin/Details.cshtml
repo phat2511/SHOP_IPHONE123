@@ -1,0 +1,48 @@
+﻿@model SHOP_IPHONE.Models.Account
+
+@{
+    ViewBag.Title = "Chi tiết tài khoản người dùng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-5">
+    <h2>Chi tiết tài khoản</h2>
+
+    <table class="table table-bordered mt-4">
+        <tr>
+            <th>ID</th>
+            <td>@Model.account_id</td>
+        </tr>
+        <tr>
+            <th>Họ tên</th>
+            <td>@Model.full_name</td>
+        </tr>
+        <tr>
+            <th>Tên đăng nhập</th>
+            <td>@Model.username</td>
+        </tr>
+        <tr>
+            <th>Email</th>
+            <td>@Model.email</td>
+        </tr>
+        <tr>
+            <th>Số điện thoại</th>
+            <td>@Model.phone</td>
+        </tr>
+        <tr>
+            <th>Mật khẩu</th>
+            <td>@Model.password</td>
+        </tr>
+        <tr>
+            <th>Địa chỉ</th>
+            <td>@Model.address</td>
+        </tr>
+        <tr>
+            <th>Vai trò</th>
+            <td>@Model.idtype</td>
+        </tr>
+    </table>
+    <div class="mt-3">
+        <a href="@Url.Action("Index","Accountadmin")" class="btn btn-secondary">Quay lại danh sách</a>
+    </div>
+</div>

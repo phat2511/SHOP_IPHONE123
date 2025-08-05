@@ -1,0 +1,75 @@
+﻿@model SHOP_IPHONE.Models.Voucher
+@{
+    ViewBag.Title = "Chỉnh sửa Voucher";
+}
+<h2 class="mb-4">Chỉnh sửa Voucher</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.voucher_id)
+
+    <div class="form-horizontal">
+        <div class="form-group mb-3">
+            @Html.LabelFor(m => m.code, "Mã voucher")
+            @Html.TextBoxFor(m => m.code, new { @class = "form-control", placeholder = "Nhập mã giảm giá" })
+        </div>
+
+        <div class="form-group mb-3">
+            @Html.LabelFor(m => m.discount_amount, "Giảm giá tiền (vnđ)")
+            @Html.TextBoxFor(m => m.discount_amount, new { @class = "form-control", placeholder = "Nhập số tiền giảm", id = "discount_amount" })
+        </div>
+
+        <div class="form-group mb-3">
+            @Html.LabelFor(m => m.discount_percent, "Giảm giá (%)")
+            @Html.TextBoxFor(m => m.discount_percent, new { @class = "form-control", placeholder = "Nhập phần trăm giảm giá", id = "discount_percent" })
+        </div>
+
+        <div class="form-group mb-3">
+            @Html.LabelFor(m => m.start_date, "Ngày bắt đầu")
+            @Html.TextBoxFor(m => m.start_date, "{0:yyyy-MM-dd}", new { type = "date", @class = "form-control" })
+        </div>
+
+        <div class="form-group mb-3">
+            @Html.LabelFor(m => m.end_date, "Ngày kết thúc")
+            @Html.TextBoxFor(m => m.end_date, "{0:yyyy-MM-dd}", new { type = "date", @class = "form-control" })
+        </div>
+
+        <div class="form-group mb-3">
+            @Html.LabelFor(m => m.min_order_value, "Giá trị đơn hàng tối thiểu")
+            @Html.TextBoxFor(m => m.min_order_value, new { @class = "form-control", placeholder = "Ví dụ: 1000000" })
+        </div>
+
+        <div class="form-group form-check mb-3">
+            @Html.CheckBox("is_active", Model.is_active ?? false, new { @class = "form-check-input" })
+            <label class="form-check-label" for="is_active">Kích hoạt voucher</label>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+        @Html.ActionLink("Quay lại danh sách", "Index", null, new { @class = "btn btn-secondary ms-2" })
+    </div>
+}
+
+@section Scripts {
+    <script>
+        const amountInput = document.getElementById('discount_amount');
+        const percentInput = document.getElementById('discount_percent');
+
+        function toggleInputs() {
+            if (amountInput.value && amountInput.value !== "0") {
+                percentInput.disabled = true;
+            } else {
+                percentInput.disabled = false;
+            }
+            if (percentInput.value && percentInput.value !== "0") {
+                amountInput.disabled = true;
+            } else {
+                amountInput.disabled = false;
+            }
+        }
+
+        amountInput.addEventListener('input', toggleInputs);
+        percentInput.addEventListener('input', toggleInputs);
+        toggleInputs();
+    </script>
+}

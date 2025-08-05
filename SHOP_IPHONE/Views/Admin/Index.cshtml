@@ -1,0 +1,52 @@
+﻿@{
+    <link rel="stylesheet" href="~/Content/SiteManage.css" />
+    ViewBag.Title = "Admin Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Quản Trị</h2>
+
+<!-- Dòng 1: Tài khoản - Sản phẩm - Đơn hàng -->
+<div class="admin-summary-container">
+    <div class="admin-box gradient-purple">
+        <div class="admin-icon"><i class="fas fa-users"></i></div>
+        <div class="admin-count">@ViewBag.UserCount</div>
+        <div class="admin-label">Tài khoản</div>
+        <a href="@Url.Action("Index", "AccountAdmin")" class="stretched-link"></a>
+    </div>
+
+    <div class="admin-box gradient-pink">
+        <div class="admin-icon"><i class="fas fa-box-open"></i></div>
+        <div class="admin-count">@ViewBag.ProductCount</div>
+        <div class="admin-label">Sản phẩm</div>
+        <a href="@Url.Action("Index1", "Product")" class="stretched-link"></a>
+    </div>
+
+    <div class="admin-box gradient-blue">
+        <div class="admin-icon"><i class="fas fa-receipt"></i></div>
+        <div class="admin-count">@ViewBag.OrderCount</div>
+        <div class="admin-label">Đơn hàng</div>
+        <a href="@Url.Action("Manage", "Order")" class="stretched-link"></a>
+    </div>
+</div>
+
+<!-- Dòng 2: Thống kê & Banner -->
+<div class="admin-summary-container">
+    <div class="admin-box gradient-dark-purple">
+        <div class="admin-icon"><i class="fas fa-chart-line"></i></div>
+        <div class="admin-count">N/A</div>
+        <div class="admin-label">Thống kê & Báo cáo</div>
+        <a href="@Url.Action("Reports", "Admin")" class="stretched-link"></a>
+    </div>
+
+    <div class="admin-box gradient-orange">
+        <div class="admin-icon"><i class="fas fa-image"></i></div>
+        <div class="admin-count">@ViewBag.BannerCount</div>
+        <div class="admin-label">Banner</div>
+        <a href="@Url.Action("Index", "Banner")" class="stretched-link"></a>
+    </div>
+</div>
+
+<h2>
+    @Html.ActionLink("Quay lại", "Index", "Product", null, new { @class = "btn btn-secondary", style = "text-decoration:none;" })
+</h2>

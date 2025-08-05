@@ -1,0 +1,30 @@
+﻿@model SHOP_IPHONE.Models.Address
+
+@{
+    ViewBag.Title = "Thêm địa chỉ nhận hàng";
+}
+
+<h2>Thêm địa chỉ</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.RecipientName, "Người nhận")
+        @Html.TextBoxFor(m => m.RecipientName, new { @class = "form-control", required = "required" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Phone, "Số điện thoại")
+        @Html.TextBoxFor(m => m.Phone, new { @class = "form-control", required = "required" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Detail, "Chi tiết địa chỉ")
+        @Html.TextBoxFor(m => m.Detail, new { @class = "form-control", required = "required" })
+    </div>
+
+    <button type="submit" class="btn btn-success">Lưu</button>
+    @Html.ActionLink("Hủy", "Index", null, new { @class = "btn btn-secondary" })
+}

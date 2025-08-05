@@ -1,0 +1,47 @@
+﻿@model SHOP_IPHONE.Models.Voucher
+@{
+    ViewBag.Title = "Chi tiết Voucher";
+}
+<h2>Chi tiết Voucher</h2>
+
+<div class="card">
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-3">Mã voucher:</dt>
+            <dd class="col-sm-9"><strong>@Model.code</strong></dd>
+
+            <dt class="col-sm-3">Giảm tiền:</dt>
+            <dd class="col-sm-9">@(Model.discount_amount?.ToString("n0") ?? "0") VNĐ</dd>
+
+            <dt class="col-sm-3">Giảm phần trăm:</dt>
+            <dd class="col-sm-9">@(Model.discount_percent?.ToString() ?? "0")%</dd>
+
+            <dt class="col-sm-3">Ngày bắt đầu:</dt>
+            <dd class="col-sm-9">@(Model.start_date?.ToString("dd/MM/yyyy") ?? "Chưa thiết lập")</dd>
+
+            <dt class="col-sm-3">Ngày kết thúc:</dt>
+            <dd class="col-sm-9">@(Model.end_date?.ToString("dd/MM/yyyy") ?? "Chưa thiết lập")</dd>
+
+            <dt class="col-sm-3">Giá trị đơn hàng tối thiểu:</dt>
+            <dd class="col-sm-9">@(Model.min_order_value?.ToString("n0") ?? "0") VNĐ</dd>
+
+            <dt class="col-sm-3">Trạng thái:</dt>
+            <dd class="col-sm-9">
+                @if (Model.is_active == true)
+                {
+                    <span class="badge bg-success">Đang kích hoạt</span>
+                }
+                else
+                {
+                    <span class="badge bg-secondary">Đã tắt</span>
+                }
+            </dd>
+        </dl>
+    </div>
+</div>
+
+<div class="mt-3">
+    @Html.ActionLink("Sửa", "Edit", new { id = Model.voucher_id }, new { @class = "btn btn-warning" })
+    @Html.ActionLink("Xóa", "Delete", new { id = Model.voucher_id }, new { @class = "btn btn-danger" })
+    @Html.ActionLink("Quay lại danh sách", "Index", null, new { @class = "btn btn-secondary" })
+</div>

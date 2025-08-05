@@ -1,0 +1,31 @@
+﻿@model SHOP_IPHONE.Models.Banner
+@{
+    ViewBag.Title = "Xoá Banner";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Xác nhận xoá Banner</h2>
+
+<div class="alert alert-warning">
+    <strong>Bạn có chắc chắn muốn xoá banner này?</strong>
+</div>
+
+<dl class="row">
+    <dt class="col-sm-2">Tiêu đề</dt>
+    <dd class="col-sm-10">@Model.title</dd>
+
+    <dt class="col-sm-2">Hình ảnh</dt>
+    <dd class="col-sm-10">
+        <img src="@Model.image_path" style="max-height: 100px;" />
+    </dd>
+
+    <dt class="col-sm-2">Trạng thái</dt>
+    <dd class="col-sm-10">@((Model.is_active ?? false) ? "Hiển thị" : "Ẩn")</dd>
+</dl>
+
+@using (Html.BeginForm("DeleteConfirmed", "Banner", new { id = Model.banner_id }, FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <button type="submit" class="btn btn-danger">Xoá</button>
+    <a href="@Url.Action("Index", "Banner")" class="btn btn-secondary ms-2">Hủy</a>
+}

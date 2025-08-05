@@ -1,0 +1,32 @@
+﻿@model SHOP_IPHONE.Models.Banner
+
+@{
+    ViewBag.Title = "Thêm Banner";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Styles {
+    <link href="~/Content/banner-create.css" rel="stylesheet" />
+}
+
+<h2>Thêm Banner</h2>
+
+@using (Html.BeginForm("Create", "Banner", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.title)
+        @Html.TextBoxFor(m => m.title, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.title, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group mt-3">
+        @Html.LabelFor(m => m.image_path, "Link hình ảnh")
+        @Html.TextBoxFor(m => m.image_path, new { @class = "form-control", placeholder = "https://..." })
+        @Html.ValidationMessageFor(m => m.image_path, "", new { @class = "text-danger" })
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-3">Thêm Banner</button>
+    <a href="@Url.Action("Index", "Banner")" class="btn btn-secondary mt-3 ms-2">Quay lại</a>
+}

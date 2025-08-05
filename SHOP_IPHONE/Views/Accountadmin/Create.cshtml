@@ -1,0 +1,49 @@
+﻿@model SHOP_IPHONE.Models.Account
+@{
+    ViewBag.Title = "Thêm tài khoản";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Thêm tài khoản mới</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.full_name)
+        @Html.TextBoxFor(m => m.full_name, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.full_name, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.username)
+        @Html.TextBoxFor(m => m.username, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.username, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.email)
+        @Html.TextBoxFor(m => m.email, new { @class = "form-control", type = "email" })
+        @Html.ValidationMessageFor(m => m.email, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.password)
+        @Html.PasswordFor(m => m.password, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.password, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.phone)
+        @Html.TextBoxFor(m => m.phone, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.phone, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.address)
+        @Html.TextBoxFor(m => m.address, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.address, "", new { @class = "text-danger" })
+    </div>
+    <button type="submit" class="btn btn-success">Lưu</button>
+    @Html.ActionLink("Quay lại", "Index", "Admin", null, new { @class = "btn btn-secondary" })
+}

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="dbc7f6f9dcfe44748b6653a8ec8ae1bc" Name="Diagram1" ZoomLevel="72">
+        <EntityTypeShape EntityType="DBiphoneModel.Account" Width="1.5" PointX="3" PointY="8.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBiphoneModel.Cart" Width="1.5" PointX="5.25" PointY="13" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBiphoneModel.CartItem" Width="1.5" PointX="7.5" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBiphoneModel.Category" Width="1.5" PointX="3" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBiphoneModel.Category1" Width="1.5" PointX="0.75" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBiphoneModel.OrderItem" Width="1.5" PointX="7.5" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBiphoneModel.Product" Width="1.5" PointX="5.25" PointY="3.375" IsExpanded="true" />
+        <AssociationConnector Association="DBiphoneModel.FK__Cart__account_id__5DCAEF64" ManuallyRouted="false" />
+        <AssociationConnector Association="DBiphoneModel.FK__CartItem__cart_i__60A75C0F" ManuallyRouted="false" />
+        <AssociationConnector Association="DBiphoneModel.FK__CartItem__produc__619B8048" ManuallyRouted="false" />
+        <AssociationConnector Association="DBiphoneModel.FK__Category__catego__4BAC3F29" ManuallyRouted="false" />
+        <AssociationConnector Association="DBiphoneModel.FK__Product__categor__4F7CD00D" ManuallyRouted="false" />
+        <AssociationConnector Association="DBiphoneModel.FK__Product__company__4E88ABD4" ManuallyRouted="false" />
+        <AssociationConnector Association="DBiphoneModel.FK__OrderItem__produ__5AEE82B9" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="DBiphoneModel.Voucher" Width="1.5" PointX="7.25" PointY="17.125" />
+        <EntityTypeShape EntityType="DBiphoneModel.Address" Width="1.5" PointX="5.25" PointY="8.5" />
+        <AssociationConnector Association="DBiphoneModel.FK__Address__Account__3B40CD36" />
+        <EntityTypeShape EntityType="DBiphoneModel.Banner" Width="1.5" PointX="0.75" PointY="0.75" />
+        <AssociationConnector Association="DBiphoneModel.FK__Banner__product___47A6A41B" />
+        <EntityTypeShape EntityType="DBiphoneModel.Order" Width="1.5" PointX="5.25" PointY="16" />
+        <AssociationConnector Association="DBiphoneModel.FK__Order__account_i__5F7E2DAC" />
+        <AssociationConnector Association="DBiphoneModel.FK__OrderItem__order__65370702" />
+        <EntityTypeShape EntityType="DBiphoneModel.ProductVariant" Width="1.5" PointX="7.5" PointY="7.25" />
+        <AssociationConnector Association="DBiphoneModel.FK_ProductVariant_Product" />
+        <EntityTypeShape EntityType="DBiphoneModel.Review" Width="1.5" PointX="10.5" PointY="6.125" />
+        <AssociationConnector Association="DBiphoneModel.FK_Review_Account" />
+        <AssociationConnector Association="DBiphoneModel.FK_Review_Product" />
+        <EntityTypeShape EntityType="DBiphoneModel.ReviewImage" Width="1.5" PointX="12.75" PointY="6.75" />
+        <AssociationConnector Association="DBiphoneModel.FK_ReviewImages_Review" />
+        <AssociationConnector Association="DBiphoneModel.FK_Order_Voucher" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

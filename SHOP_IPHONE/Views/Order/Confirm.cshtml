@@ -1,0 +1,373 @@
+﻿@model SHOP_IPHONE.Models.ConfirmOrderViewModel
+
+@functions {
+    public string GetColorHex(string variant)
+    {
+        switch (variant?.ToLower())
+        {
+            case string v when v.Contains("đen"): return "#000";
+            case string v when v.Contains("trắng"): return "#fff";
+            case string v when v.Contains("xanh"): return "#007bff";
+            case string v when v.Contains("vàng"): return "#f1c40f";
+            case string v when v.Contains("tím"): return "#8e44ad";
+            case string v when v.Contains("hồng"): return "#ff69b4";
+            case string v when v.Contains("bạc"): return "#bdc3c7";
+            default: return "#ccc";
+        }
+    }
+}
+
+@{
+    var subtotal = Model.CartItems?.Sum(x => x.Total) ?? 0;
+    var total = subtotal + Model.ShippingFee;
+}
+
+@using (Html.BeginForm("PlaceOrder", "Order", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.ShippingFee)
+    <div class="container py-4">
+        <h2 class="text-center mb-4">Xác nhận đơn hàng</h2>
+
+        <div class="row">
+            <!-- Form Nhập -->
+            <div class="col-md-6">
+                <div class="order-card">
+                    <div class="section-title">Thông tin người nhận</div>
+                    <div class="form-group">
+                        <label for="VoucherCode">Nhập mã giảm giá</label>
+                        @Html.TextBox("VoucherCode", null, new { @class = "form-control", placeholder = "Nhập mã giảm giá", id = "VoucherCode" })
+                        <button type="button" class="btn btn-primary mt-2" id="btnCheckVoucher">Áp dụng</button>
+                        <span id="voucherMessage" class="text-danger"></span>
+                    </div>
+                    @Html.HiddenFor(m => m.SelectedVoucherId, new { id = "SelectedVoucherId" })
+                    <div class="mb-3">
+                        <label class="form-label">Họ tên:</label>
+                        @Html.TextBoxFor(m => m.CustomerName, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.CustomerName, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">SĐT:</label>
+                        @Html.TextBoxFor(m => m.Phone, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Phone, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Chọn địa chỉ đã lưu:</label>
+                        @Html.DropDownListFor(m => m.SelectedAddressId,
+                            new SelectList(Model.Adresses ?? new List<SHOP_IPHONE.Models.Address>(), "AddressId", "Detail"),
+                            "-- Chọn địa chỉ --",
+                            new { @class = "form-select", onchange = "fillAddressFromDropdown()" })
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Hoặc nhập địa chỉ mới:</label>
+                        @Html.TextBoxFor(m => m.Address, new { @class = "form-control", placeholder = "Nhập địa chỉ nếu không chọn bên trên", id = "manualAddress" })
+                        @Html.ValidationMessageFor(m => m.Address, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Hình thức thanh toán:</label>
+                        @for (int i = 0; i < Model.PaymentMethods.Count; i++)
+                        {
+                            var method = Model.PaymentMethods[i];
+                            <div class="form-check">
+                                @Html.RadioButtonFor(m => m.SelectedPaymentMethod, method, new { @class = "form-check-input", @onclick = "toggleTransferCheckbox()" })
+                                <label class="form-check-label">@method</label>
+                            </div>
+                        }
+                        @Html.ValidationMessageFor(m => m.SelectedPaymentMethod, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div id="transferConfirmBox" style="display:none;">
+                        <div class="form-check">
+                            @Html.Hidden("HasTransferred", "false")
+                            @Html.CheckBoxFor(m => m.HasTransferred, new { @class = "form-check-input" })
+                            <label class="form-check-label">Tôi xác nhận đã chuyển khoản</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Giỏ hàng + Tổng tiền -->
+            <div class="col-md-6">
+                <div class="order-card">
+                    <div class="section-title">Sản phẩm trong giỏ hàng</div>
+
+                    @if (Model.CartItems != null && Model.CartItems.Any())
+                    {
+                        foreach (var item in Model.CartItems)
+                        {
+                            string imgSrc = "";
+                            if (item.Images != null && item.Images.Length > 0)
+                            {
+                                try
+                                {
+                                    var base64 = Convert.ToBase64String(item.Images);
+                                    imgSrc = $"data:image/jpeg;base64,{base64}";
+                                }
+                                catch
+                                {
+                                    imgSrc = "";
+                                }
+                            }
+
+                            <div class="product-item">
+                                @if (!string.IsNullOrEmpty(imgSrc))
+                                {
+                                    <img src="@imgSrc" alt="@item.ProductName" />
+                                }
+                                else
+                                {
+                                    <div class="no-image-placeholder">
+                                        <i class="fa fa-image"></i>
+                                        <span>Không có ảnh</span>
+                                    </div>
+                                }
+                                <div class="flex-grow-1">
+                                    <div class="fw-bold">@item.ProductName</div>
+                                    <div class="text-muted">
+                                        Phân loại:
+                                        <span class="color-dot" style="background-color:@GetColorHex(item.Variant)"></span>
+                                        <span style="text-transform: capitalize;">@item.Variant</span>
+                                    </div>
+                                    <div class="text-danger fw-bold">@($"{item.Price?.ToString("n0")} đ x {item.Quantity}")</div>
+                                    <div class="text-end">Tổng: <strong>@item.Total.ToString("n0") đ</strong></div>
+                                </div>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <p class="text-danger">Không có sản phẩm nào trong giỏ hàng.</p>
+                    }
+
+                    <hr />
+                    @{
+                        var vat = subtotal * 0.1m;
+                        var totalWithVat = subtotal + vat + Model.ShippingFee;
+                        var discount = Model.DiscountAmount;
+                        var totalAfterDiscount = totalWithVat - discount;
+                    }
+
+                    <div class="d-flex justify-content-between">
+                        <span class="total-label">Tạm tính:</span>
+                        <span>@subtotal.ToString("n0") đ</span>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <span class="total-label">Phí vận chuyển:</span>
+                        <span>@Model.ShippingFee.ToString("n0") đ</span>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <span class="total-label">Thuế VAT (10%):</span>
+                        <span>@vat.ToString("n0") đ</span>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <span class="total-label">Giảm giá:</span>
+                        <span id="discountValue">-@discount.ToString("n0") đ</span>
+                    </div>
+                    <div class="d-flex justify-content-between mt-2 border-top pt-2">
+                        <span class="total-label">Tổng thanh toán:</span>
+                        <span class="total-value" id="finalTotal">@totalAfterDiscount.ToString("n0") đ</span>
+                    </div>
+                    <button type="submit" class="btn btn-confirm w-100 mt-3">Xác nhận đặt hàng</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        function toggleTransferCheckbox() {
+            var selectedMethod = $('input[name="SelectedPaymentMethod"]:checked').val();
+            if (selectedMethod === "Chuyển khoản") {
+                $('#transferConfirmBox').show();
+            } else {
+                $('#transferConfirmBox').hide();
+                $('input[name="HasTransferred"]').prop('checked', false);
+            }
+        }
+
+        $(document).ready(function () {
+            toggleTransferCheckbox();
+        });
+
+        function fillAddressFromDropdown() {
+            var selected = $('#SelectedAddressId option:selected').text();
+            if (selected !== "-- Chọn địa chỉ --") {
+                $('#manualAddress').val(selected);
+            }
+        }
+    $(document).ready(function () {
+        $('#btnCheckVoucher').click(function () {
+            var voucherCode = $('#VoucherCode').val();
+            $.ajax({
+                url: '@Url.Action("CalculateDiscountByCode", "Order")',
+                type: 'POST',
+                data: { code: voucherCode },
+                success: function (data) {
+                    if (data.success) {
+                        $('#discountValue').text('-' + data.discount + ' đ');
+                        $('#finalTotal').text(data.totalAfterDiscount + ' đ');
+                        /*$('#voucherMessage').text('Áp dụng mã thành công!').removeClass('text-danger').addClass('text-success');*/
+                        $('#SelectedVoucherId').val(data.voucherId);
+                    } else {
+                        $('#voucherMessage').text(data.message).removeClass('text-success').addClass('text-danger');
+                        $('#discountValue').text('-0 đ');
+                        $('#finalTotal').text(data.totalAfterDiscount + ' đ');
+                        $('#SelectedVoucherId').val('');
+                    }
+                }
+            });
+        });
+    });
+    </script>
+}
+@section Styles {
+    <style>
+        body {
+            background: linear-gradient(135deg, #f4f6f8 60%, #e3e9f0 100%);
+        }
+
+        .order-card {
+            background: #fff;
+            padding: 32px 28px 28px 28px;
+            border-radius: 16px;
+            box-shadow: 0 6px 24px rgba(0,0,0,0.08);
+            margin-bottom: 24px;
+        }
+
+        .section-title {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 22px;
+            color: #007bff;
+            letter-spacing: 0.5px;
+        }
+
+        .form-label {
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: #333;
+        }
+
+        .form-control, .form-select {
+            border-radius: 8px;
+            font-size: 16px;
+            padding: 10px 12px;
+            margin-bottom: 8px;
+        }
+
+        .form-check-label {
+            font-size: 15px;
+            color: #444;
+        }
+
+        .product-item {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            margin-bottom: 18px;
+            padding: 14px 10px;
+            background: #f7fafd;
+            border-radius: 12px;
+            border: 1px solid #e3e9f0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+        }
+
+        .product-item img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 10px;
+            border: 1.5px solid #e3e9f0;
+            box-shadow: 0 0 6px rgba(0,0,0,0.07);
+        }
+
+        .no-image-placeholder {
+            width: 80px;
+            height: 80px;
+            border-radius: 10px;
+            border: 1.5px solid #e3e9f0;
+            background: #f8f9fa;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #6c757d;
+            font-size: 12px;
+        }
+
+        .no-image-placeholder i {
+            font-size: 20px;
+            margin-bottom: 4px;
+        }
+
+        .color-dot {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            display: inline-block;
+            border: 1.5px solid #888;
+            margin-left: 8px;
+            margin-right: 5px;
+            box-shadow: 0 0 3px rgba(0,0,0,0.12);
+            vertical-align: middle;
+        }
+
+        .total-label {
+            font-weight: 600;
+            color: #222;
+        }
+
+        .total-value {
+            font-weight: 800;
+            font-size: 20px;
+            color: #e74c3c;
+            letter-spacing: 1px;
+        }
+
+        .btn-confirm {
+            font-size: 18px;
+            padding: 14px 0;
+            border-radius: 10px;
+            background: linear-gradient(90deg, #007bff 60%, #0056b3 100%);
+            color: #fff;
+            font-weight: 700;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            transition: background 0.3s;
+            margin-top: 18px;
+        }
+
+        .btn-confirm:hover {
+            background: linear-gradient(90deg, #0056b3 60%, #007bff 100%);
+            color: #fff;
+        }
+
+        #btnCheckVoucher {
+            margin-left: 8px;
+            font-size: 15px;
+            padding: 7px 16px;
+            border-radius: 7px;
+        }
+
+        #voucherMessage {
+            display: block;
+            margin-top: 6px;
+            font-size: 14px;
+        }
+
+        @@media (max-width: 767px) {
+            .order-card {
+                padding: 18px 8px;
+            }
+            .product-item img {
+                width: 60px;
+                height: 60px;
+            }
+        }
+    </style>
+}

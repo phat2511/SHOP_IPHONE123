@@ -1,0 +1,25 @@
+﻿
+@{
+    ViewBag.Title = "Xác nhận mã OTP";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Xác nhận mã OTP</h2>
+
+@if (ViewBag.Info != null)
+{
+    <div class="alert alert-info">@ViewBag.Info</div>
+}
+@if (ViewBag.Error != null)
+{
+    <div class="alert alert-danger">@ViewBag.Error</div>
+}
+
+@using (Html.BeginForm("ConfirmResetOtp", "Account", FormMethod.Post))
+{
+    <div class="form-group">
+        <label>Mã OTP</label>
+        <input name="otp" class="form-control" required placeholder="Nhập mã OTP từ email" />
+    </div>
+    <button type="submit" class="btn btn-success mt-2">Xác nhận</button>
+}

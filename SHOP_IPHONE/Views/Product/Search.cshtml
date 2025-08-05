@@ -1,0 +1,37 @@
+﻿@model SHOP_IPHONE.Models.SearchViewModel
+@{
+
+    ViewBag.Title = "Search";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    <link rel="stylesheet" href="~/Content/Site.css" />
+}
+
+<h2>Kết quả tìm kiếm cho: "@Model.Keyword"</h2>
+
+@if (Model.Results != null && Model.Results.Count > 0)
+{
+    <div class="row">
+        @foreach (var p in Model.Results)
+        {
+            <div class="col-md-3 mb-4">
+                <div class="card h-100">
+                    <a href="@Url.Action("Details", "Product", new { id = p.product_id })">
+                        <img class="card-img-top" style="height:200px;object-fit:cover"
+                             src="@(p.images != null ? "data:image;base64," + Convert.ToBase64String(p.images) : "/Content/Images/no-image.png")"
+                             alt="@p.product_name" />
+                    </a>
+
+                    <div class="card-body">
+                        <h5 class="card-title text-truncate">@p.product_name</h5>
+                        <p class="card-text text-danger">@String.Format("{0:N0} ₫", p.price)</p>
+                        <a href="@Url.Action("Details", "Product", new { id = p.product_id })" class="btn btn-primary btn-sm">Xem chi tiết</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <p>Không tìm thấy sản phẩm nào.</p>
+}

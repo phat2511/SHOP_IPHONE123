@@ -1,0 +1,35 @@
+﻿@model SHOP_IPHONE.Models.Voucher
+@{
+    ViewBag.Title = "Xóa Voucher";
+}
+<h2>Xóa Voucher</h2>
+
+<div class="alert alert-warning">
+    <h4>Bạn có chắc muốn xóa voucher: <strong>@Model.code</strong>?</h4>
+    <p>Hành động này không thể hoàn tác!</p>
+</div>
+
+<div class="card mb-3">
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-3">Giảm tiền:</dt>
+            <dd class="col-sm-9">@(Model.discount_amount?.ToString("n0") ?? "0") VNĐ</dd>
+
+            <dt class="col-sm-3">Giảm phần trăm:</dt>
+            <dd class="col-sm-9">@(Model.discount_percent?.ToString() ?? "0")%</dd>
+
+            <dt class="col-sm-3">Ngày bắt đầu:</dt>
+            <dd class="col-sm-9">@(Model.start_date?.ToString("dd/MM/yyyy") ?? "Chưa thiết lập")</dd>
+
+            <dt class="col-sm-3">Ngày kết thúc:</dt>
+            <dd class="col-sm-9">@(Model.end_date?.ToString("dd/MM/yyyy") ?? "Chưa thiết lập")</dd>
+        </dl>
+    </div>
+</div>
+
+@using (Html.BeginForm("Delete", "Voucher", new { id = Model.voucher_id }))
+{
+    @Html.AntiForgeryToken()
+    <button type="submit" class="btn btn-danger">Xác nhận xóa</button>
+    @Html.ActionLink("Hủy", "Index", null, new { @class = "btn btn-secondary ms-2" })
+}

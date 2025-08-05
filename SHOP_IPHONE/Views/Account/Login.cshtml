@@ -1,0 +1,134 @@
+﻿
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Segoe UI', sans-serif;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        /*background: linear-gradient(to top right, #1f0036, #ff416c, #ff4b2b);*/
+        background: white;
+    }
+
+    .main-content {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    /* Hộp chứa toàn bộ form */
+    .from-box {
+        background: #09022d;
+        backdrop-filter: blur(15px);
+        border-radius: 20px;
+        padding: 40px;
+        width: 350px;
+        color: white;
+        box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+    }
+
+
+    /* Phần bên trong form */
+    .from-value h2 {
+        text-align: center;
+        margin-bottom: 30px;
+        font-weight: bold;
+    }
+
+    /* Nhãn và input */
+    .inputbox {
+        margin-bottom: 20px;
+    }
+
+        .inputbox label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 500;
+        }
+
+        .inputbox input {
+            width: 100%;
+            padding: 10px;
+            background: transparent;
+            border: none;
+            border-bottom: 2px solid white;
+            color: white;
+            font-size: 14px;
+            outline: none;
+        }
+
+            .inputbox input::placeholder {
+                color: rgba(255, 255, 255, 0.6);
+            }
+
+    /* Nút đăng nhập */
+    button.btn-primary {
+        background: white;
+        color: #333;
+        border: none;
+        border-radius: 30px;
+        padding: 10px;
+        width: 100%;
+        font-weight: bold;
+        transition: 0.3s ease;
+    }
+
+        button.btn-primary:hover {
+            background: #f0f0f0;
+        }
+
+    /* Đăng ký và lỗi */
+    p.mt-3 {
+        text-align: center;
+        font-size: 0.9em;
+        margin-top: 20px;
+    }
+
+        p.mt-3 a {
+            color: #fff;
+            font-weight: bold;
+            text-decoration: underline;
+        }
+
+    div[style*="color:red"] {
+        margin-top: 15px;
+        font-size: 0.9em;
+        text-align: center;
+    }
+</style>
+<div class="main-content">
+    <div class="from-box">
+        <div class="from-value">
+            <h2>Đăng nhập</h2>
+
+            @using (Html.BeginForm("Login", "Account", FormMethod.Post))
+            {
+                <div class="inputbox">
+                    <label>Tên đăng nhập:</label>
+                    @Html.TextBox("username", null, new { @class = "form-control", required = "required" })
+                </div>
+                <div class="inputbox">
+                    <label>Mật khẩu:</label>
+                    @Html.Password("password", null, new { @class = "form-control", required = "required" })
+                </div>
+                <br />
+                <button type="submit" class="btn btn-primary">Đăng nhập</button>
+                <p class="mt-3">
+                    Chưa có tài khoản? <a href="@Url.Action("Register", "Account")">Đăng ký ngay</a>
+                </p>
+                if (ViewBag.ErrorMessage != null)
+                {
+                    <div style="color:red">@ViewBag.ErrorMessage</div>
+                }
+            }
+        </div>
+    </div>
+
+</div>

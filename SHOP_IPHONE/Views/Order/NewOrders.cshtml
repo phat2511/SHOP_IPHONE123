@@ -1,0 +1,53 @@
+﻿@model List<SHOP_IPHONE.Models.Order>
+@{
+    ViewBag.Title = "Đơn hàng mới";
+    <link rel="stylesheet" href="~/Content/SiteApproved.css" />
+}
+
+<h2 class="confirmed-title">
+    <i>📝</i> Đơn hàng mới chờ xử lý
+</h2>
+
+@if (!Model.Any())
+{
+    <div class="table-wrapper">
+        <p style="padding: 10px; font-size: 16px; color: #666;">Hiện chưa có đơn hàng nào mới.</p>
+    </div>
+}
+else
+{
+    <div class="table-wrapper">
+        <table class="confirmed-table">
+            <thead>
+                <tr>
+                    <th>Mã đơn</th>
+                    <th>Ngày đặt</th>
+                    <th>Tổng tiền</th>
+                    <th>Trạng thái</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var order in Model)
+                {
+                    <tr>
+                        <td>#@order.order_id</td>
+                        <td>@order.order_date</td>
+                        <td>@String.Format("{0:N0}", order.total_amount) VNĐ</td>
+                        <td>@order.status</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <div class="text-end" style="margin-top: 20px;">
+            @Html.ActionLink("👁 Xem tất cả chi tiết đơn hàng", "AllNewOrderDetail", "Order", null, new
+           {
+             @style = "background-color: #2C3E50; color: white; padding: 8px 16px; border-radius: 6px; text-decoration: none; font-weight: bold;"
+           })
+
+        </div>
+        <h2>
+            @Html.ActionLink("Quay lại", "Manage", "Order", null, new { @class = "btn btn-secondary", style = "text-decoration:none;" })
+        </h2>
+    </div>
+}

@@ -1,0 +1,33 @@
+﻿@{
+    ViewBag.Title = "Xác thực Email";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Xác thực Email</h2>
+
+@if (ViewBag.Info != null)
+{
+    <div class="alert alert-info">@ViewBag.Info</div>
+}
+@if (ViewBag.Success != null)
+{
+    <div class="alert alert-success">@ViewBag.Success</div>
+    <a href="@Url.Action("UserProfile", "Account")" class="btn btn-success mt-2">Quay lại</a>
+}
+else
+{
+    if (ViewBag.Error != null)
+    {
+        <div class="alert alert-danger">@ViewBag.Error</div>
+    }
+
+    <p>Nhập mã OTP được gửi tới email của bạn:</p>
+
+    using (Html.BeginForm("VerifyEmail", "Account", FormMethod.Post))
+    {
+        <div class="form-group">
+            <input type="text" name="otp" class="form-control" placeholder="Nhập mã OTP" required />
+        </div>
+        <button type="submit" class="btn btn-primary mt-2">Xác thực</button>
+    }
+}

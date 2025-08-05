@@ -1,0 +1,38 @@
+﻿@model List<SHOP_IPHONE.Models.Voucher>
+@{
+    ViewBag.Title = "Danh sách Voucher";
+}
+<h2>Danh sách Voucher</h2>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Mã</th>
+            <th>Giảm tiền</th>
+            <th>Giảm %</th>
+            <th>Ngày bắt đầu</th>
+            <th>Ngày kết thúc</th>
+            <th>Đơn tối thiểu</th>
+            <th>Kích hoạt</th>
+            <th>Thao tác</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var v in Model)
+        {
+            <tr>
+                <td>@v.code</td>
+                <td>@v.discount_amount</td>
+                <td>@v.discount_percent</td>
+                <td>@v.start_date</td>
+                <td>@v.end_date</td>
+                <td>@v.min_order_value</td>
+                <td>@(v.is_active == true ? "Có" : "Không")</td>
+                <td>
+                    @Html.ActionLink("Sửa", "Edit", new { id = v.voucher_id }, new { @class = "btn btn-sm btn-warning" })
+                    @Html.ActionLink("Xóa", "Delete", new { id = v.voucher_id }, new { @class = "btn btn-sm btn-danger" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@Html.ActionLink("Thêm mới", "Create", null, new { @class = "btn btn-primary" })

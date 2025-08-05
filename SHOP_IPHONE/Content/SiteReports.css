@@ -1,0 +1,146 @@
+﻿/* Tổng quan font */
+* {
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* Container của các box */
+.report-summary-container {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+/* Box từng chỉ số */
+.report-box {
+    width: 220px;
+    padding: 25px 20px;
+    border-radius: 12px;
+    color: white;
+    background: linear-gradient(135deg, #0f0f0f 0%, #1e3c72 100%);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+    .report-box:hover {
+        transform: scale(1.05);
+        box-shadow: 0 12px 25px rgba(0, 119, 255, 0.5);
+    }
+
+.report-icon {
+    font-size: 32px;
+    margin-bottom: 12px;
+    color: #4dabf7;
+}
+
+.report-label {
+    font-size: 14px;
+    color: #dcdcdc;
+    opacity: 0.9;
+    margin-top: 6px;
+}
+
+.report-count {
+    font-size: 26px;
+    font-weight: bold;
+    margin-top: 4px;
+    color: #fff;
+}
+
+/* Biểu đồ doanh thu to hơn */
+.chart-container-wide {
+    width: 90%;
+    margin: 40px auto 20px;
+    background: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Biểu đồ pie */
+.chart-container-small {
+    width: 300px;
+    margin: 20px auto;
+    background: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.pie-legend {
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+    .pie-legend div {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        font-size: 14px;
+        color: #333;
+    }
+
+.legend-dot {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+}
+
+    .legend-dot.sold {
+        background: #4dabf7;
+    }
+
+    .legend-dot.cancelled {
+        background: #ff6b6b;
+    }
+
+/* Responsive cho mobile */
+@media (max-width: 768px) {
+    .report-summary-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .chart-container-wide {
+        width: 95%;
+    }
+
+    .chart-container-small {
+        width: 90%;
+    }
+}
+
+
+/*CSS cho nút tuần/tháng/năm trong thống kê báo cáo*/
+.custom-select {
+    padding: 6px 12px;
+    font-size: 14px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    color: #333;
+    transition: all 0.3s ease;
+    outline: none;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+    .custom-select:hover {
+        border-color: #4dabf7;
+        box-shadow: 0 0 6px rgba(77, 171, 247, 0.5);
+    }
+
+    .custom-select:focus {
+        border-color: #4dabf7;
+        box-shadow: 0 0 8px rgba(77, 171, 247, 0.8);
+    }
+
+.best-seller-box {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    font-size: 14px;
+}

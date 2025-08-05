@@ -1,0 +1,63 @@
+﻿@model List<SHOP_IPHONE.Models.Order>
+@using SHOP_IPHONE.Models
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="mb-4">Lịch sử đơn hàng</h2>
+
+@if (Model != null && Model.Any())
+{
+    <div class="row">
+        @foreach (var order in Model)
+        {
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card shadow-sm border rounded p-3 h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Mã đơn: <span class="text-primary">#@order.order_id</span></h5>
+                        <p class="card-text">
+                            <strong>Ngày đặt:</strong> @(((DateTime)order.order_date).ToString("dd/MM/yyyy"))<br />
+                            <strong>Tổng tiền:</strong> @String.Format("{0:N0}", order.total_amount) ₫<br />
+                            <strong>Trạng thái:</strong> <span class="fw-bold
+    @(order.status == "Đã hủy" ? "text-danger" :
+      order.status == "Đã xác nhận" ? "text-success" :
+      order.status == "Chờ xử lý" ? "text-warning" :
+      "text-primary")">
+                                @order.status
+                            </span><br />
+
+                            <strong>Phương thức:</strong> @order.payment_method
+                        </p>
+                        <hr />
+                        <p class="card-text mb-1"><strong>Thông tin khách hàng:</strong></p>
+                        <ul class="list-unstyled mb-3">
+                            <li>👤 @order.customer_name</li>
+                            <li>📞 @order.phone</li>
+                            <li>📍 @order.address</li>
+                        </ul>
+
+                        @if (order.status == "Chờ xử lý")
+                        {
+                            using (Html.BeginForm("CancelOrder", "Order", new { id = order.order_id }, FormMethod.Post))
+                            {
+                                <button type="submit" class="btn btn-outline-danger btn-sm"
+                                        onclick="return confirm('Bạn có chắc chắn muốn hủy đơn hàng này không?');">
+                                    Hủy đơn hàng
+                                </button>
+                            }
+                        }
+                        else if (order.status == "Đã hủy")
+                        {
+                            <span class="text-muted">Đơn hàng đã hủy</span>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <div class="alert alert-info">Bạn chưa có đơn hàng nào.</div>
+}

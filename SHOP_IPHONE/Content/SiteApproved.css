@@ -1,0 +1,111 @@
+﻿/* Reset + font */
+* {
+    font-family: 'Segoe UI', sans-serif;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #f4f6f8;
+    margin: 0;
+    padding: 20px;
+    color: #000;
+}
+
+/* Tiêu đề */
+.confirmed-title {
+    font-size: 28px;
+    font-weight: bold;
+    color: #2c3e50;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+    .confirmed-title i {
+        font-size: 30px;
+        color: #4caf50;
+    }
+
+/* Bọc bảng */
+.table-wrapper {
+    width: 95%;
+    margin: auto;
+    background-color: #fff;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    padding: 20px;
+    overflow-x: auto;
+}
+
+/* Bảng */
+.confirmed-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 15px;
+}
+
+    .confirmed-table thead {
+        background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+        color: #fff;
+    }
+
+        .confirmed-table thead th {
+            padding: 14px 12px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+    .confirmed-table tbody td {
+        padding: 12px;
+        text-align: center;
+        color: #222;
+        border-bottom: 1px solid #e0e0e0;
+    }
+
+    .confirmed-table tbody tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    .confirmed-table tbody tr:hover {
+        background-color: #eef3f7;
+        transition: background 0.3s;
+    }
+
+/* Responsive */
+@media (max-width: 768px) {
+    .confirmed-table thead {
+        display: none;
+    }
+
+    .confirmed-table,
+    .confirmed-table tbody,
+    .confirmed-table tr,
+    .confirmed-table td {
+        display: block;
+        width: 100%;
+    }
+
+        .confirmed-table tr {
+            margin-bottom: 15px;
+            background: #fff;
+            border-radius: 10px;
+            padding: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .confirmed-table td {
+            text-align: right;
+            padding-left: 50%;
+            position: relative;
+        }
+
+            .confirmed-table td::before {
+                content: attr(data-label);
+                position: absolute;
+                left: 10px;
+                font-weight: bold;
+                color: #00bcd4;
+                text-align: left;
+            }
+}

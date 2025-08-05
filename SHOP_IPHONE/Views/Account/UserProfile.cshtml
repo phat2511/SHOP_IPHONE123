@@ -1,0 +1,89 @@
+﻿@model SHOP_IPHONE.Models.Account
+
+@{
+    ViewBag.Title = "Thông tin cá nhân";
+}
+
+<h2 class="mb-3">Thông tin cá nhân</h2>
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">@TempData["Success"]</div>
+}
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">@TempData["Error"]</div>
+}
+
+<table class="table table-bordered">
+    <tr>
+        <th>Họ tên</th>
+        <td>@Model.full_name</td>
+    </tr>
+    <tr>
+        <th>Tên đăng nhập</th>
+        <td>@Model.username</td>
+    </tr>
+    <tr>
+        <th>Email</th>
+        <td>
+            @Model.email
+            @if (Model.isVerified)
+            {
+                <span class="text-success">[Đã xác thực]</span>
+            }
+            else
+            {
+                <a href="@Url.Action("SendVerificationEmail", "Account")" class="text-danger">[Chưa xác thực - Xác thực ngay]</a>
+            }
+        </td>
+    </tr>
+    <tr>
+        <th>Số điện thoại</th>
+        <td>@Model.phone</td>
+    </tr>
+    <tr>
+        <th>Địa chỉ</th>
+        <td>@Model.address</td>
+    </tr>
+    <tr>
+        <th>Trạng thái tài khoản</th>
+        <td>
+            @if (Model.isLocked)
+            {
+                <span class="text-warning">Tài khoản tạm khóa</span>
+            }
+            else
+            {
+                <span class="text-success">Đang hoạt động</span>
+            }
+        </td>
+    </tr>
+</table>
+
+<div class="row mt-3">
+    <div class="col-md-6">
+        <a href="@Url.Action("EditProfile", "Account")" class="btn btn-warning me-2">Chỉnh sửa thông tin</a>
+
+        @if (!Model.isLockedByAdmin)
+        {
+            if (Model.isLocked)
+            {
+                <form method="post" action="@Url.Action("UnlockMyAccount", "Account")" style="display:inline;">
+                    <button type="submit" class="btn btn-success">Mở khóa tài khoản</button>
+                </form>
+            }
+            else
+            {
+                <form method="post" action="@Url.Action("LockMyAccount", "Account")" style="display:inline;" onsubmit="return confirm('Bạn chắc chắn muốn tự khóa tài khoản?')">
+                    <button type="submit" class="btn btn-danger">Tự khóa tài khoản</button>
+                </form>
+            }
+        }
+    </div>
+
+    <div class="col-md-6 text-end">
+        @Html.ActionLink("Xóa tài khoản", "Delete", "Account", new { id = Model.account_id }, new { @class = "btn btn-danger", onclick = "return confirm('Bạn có chắc muốn xóa tài khoản không?');" })
+    </div>
+</div>
